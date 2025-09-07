@@ -1,153 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Kaushalya Swap - Get Started</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #0d1117;
-      color: #f0f6fc;
+      background: #f8f9fa;
       margin: 0;
       padding: 0;
     }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 30px;
-      background-color: #161b22;
-    }
-
-    header img {
-      height: 40px;
-    }
-
-    header h1 {
-      font-size: 20px;
-      color: #f0f6fc;
-    }
-
-    header nav a {
-      color: #f0f6fc;
-      margin-left: 20px;
-      text-decoration: none;
-    }
-
     .container {
-      max-width: 500px;
-      margin: 60px auto;
-      background-color: #161b22;
-      padding: 30px;
-      border-radius: 10px;
       text-align: center;
+      padding: 50px;
     }
 
-    .container h2 {
-      margin-bottom: 20px;
-      font-size: 24px;
-    }
-
-    input {
-      width: 90%;
-      padding: 12px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 8px;
-      background-color: #0d1117;
-      color: #f0f6fc;
+    h1 {
+      color: #222;
     }
 
     button {
-      background-color: #00bfa6;
+      padding: 10px 20px;
+      margin: 10px;
       border: none;
+      border-radius: 5px;
+      background: #007bff;
       color: white;
-      padding: 12px 25px;
-      margin-top: 15px;
       cursor: pointer;
-      border-radius: 8px;
       font-size: 16px;
     }
 
     button:hover {
-      background-color: #009e8c;
+      background: #0056b3;
     }
 
-    .link {
-      margin-top: 15px;
-      display: block;
-      color: #00bfa6;
-      cursor: pointer;
-    }
-
-    /* Modal Styles */
+    /* Modal styles */
     .modal {
       display: none;
       position: fixed;
-      z-index: 1000;
+      z-index: 1;
       left: 0; top: 0;
       width: 100%; height: 100%;
-      background-color: rgba(0,0,0,0.7);
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
     }
 
     .modal-content {
-      background-color: #161b22;
+      background-color: #fff;
       margin: 10% auto;
       padding: 20px;
+      border: 1px solid #888;
+      width: 300px;
       border-radius: 10px;
-      width: 400px;
-      text-align: center;
     }
 
     .close {
+      color: #aaa;
       float: right;
-      font-size: 20px;
+      font-size: 28px;
+      font-weight: bold;
       cursor: pointer;
-      color: #f0f6fc;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      text-align: left;
+    }
+
+    input {
+      width: 95%;
+      padding: 8px;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Kaushalya Swap</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-    </nav>
-  </header>
-
   <div class="container">
-    <h2>Get Started</h2>
+    <h1>Welcome to Kaushalya Swap</h1>
+    <p>Sign up or Sign in to continue</p>
     <button onclick="openModal('signupModal')">Sign Up</button>
     <button onclick="openModal('signinModal')">Sign In</button>
   </div>
 
-  <!-- Sign Up Modal -->
+  <!-- Signup Modal -->
   <div id="signupModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeModal('signupModal')">&times;</span>
       <h2>Sign Up</h2>
       <form id="signupForm">
-        <input type="text" id="signupName" placeholder="Enter your name" required>
-        <input type="email" id="signupEmail" placeholder="Enter your email" required>
-        <input type="password" id="signupPassword" placeholder="Enter your password" required>
-        <input type="text" id="signupSkillHave" placeholder="Skills you HAVE" required>
-        <input type="text" id="signupSkillWant" placeholder="Skills you WANT" required>
+        <label for="signupName">Name</label>
+        <input type="text" id="signupName" required>
+
+        <label for="signupSkillHave">Skills You Have</label>
+        <input type="text" id="signupSkillHave" required>
+
+        <label for="signupSkillWant">Skills You Want</label>
+        <input type="text" id="signupSkillWant" required>
+
+        <label for="signupPassword">Password</label>
+        <input type="password" id="signupPassword" required>
+
         <button type="submit">Sign Up</button>
       </form>
     </div>
   </div>
 
-  <!-- Sign In Modal -->
+  <!-- Signin Modal -->
   <div id="signinModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeModal('signinModal')">&times;</span>
       <h2>Sign In</h2>
       <form id="signinForm">
-        <input type="email" id="signinEmail" placeholder="Enter your email" required>
-        <input type="password" id="signinPassword" placeholder="Enter your password" required>
+        <label for="signinName">Name</label>
+        <input type="text" id="signinName" required>
+
+        <label for="signinPassword">Password</label>
+        <input type="password" id="signinPassword" required>
+
         <button type="submit">Sign In</button>
       </form>
     </div>
@@ -164,20 +137,43 @@
       document.getElementById(id).style.display = "none";
     }
 
-    // Sign Up
-    document.getElementById("signupForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-      alert("🎉 Sign Up Successful! Welcome " + document.getElementById("signupName").value);
-      closeModal('signupModal');
-      window.location.href = "browse.html"; // redirect to browse page
+    // Signup
+    document.getElementById("signupForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById("signupName").value;
+      const skillHave = document.getElementById("signupSkillHave").value;
+      const skillWant = document.getElementById("signupSkillWant").value;
+      const password = document.getElementById("signupPassword").value;
+
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+
+      // Save new user
+      users.push({ name, skillHave, skillWant, password });
+      localStorage.setItem("users", JSON.stringify(users));
+
+      alert("Signup successful!");
+      document.getElementById("signupForm").reset();
+      closeModal("signupModal");
     });
 
-    // Sign In
-    document.getElementById("signinForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-      alert("✅ Signed in successfully!");
-      closeModal('signinModal');
-      window.location.href = "browse.html"; // redirect to browse page
+    // Signin
+    document.getElementById("signinForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById("signinName").value;
+      const password = document.getElementById("signinPassword").value;
+
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+      let user = users.find(u => u.name === name && u.password === password);
+
+      if (user) {
+        alert("Signin successful!");
+        localStorage.setItem("loggedInUser", JSON.stringify(user));
+        window.location.href = "browse.html";
+      } else {
+        alert("Invalid credentials!");
+      }
     });
   </script>
 </body>
