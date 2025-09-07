@@ -28,13 +28,13 @@
     </div>
   </section>
 
-  <!-- Directory -->
+  <!-- All Users Section -->
   <section class="directory">
     <h2>All Users</h2>
     <div id="userList" class="card-container"></div>
   </section>
 
-  <!-- Matches -->
+  <!-- Matches Section -->
   <section class="directory">
     <h2>My Matches</h2>
     <div id="matchList" class="card-container"></div>
@@ -101,12 +101,12 @@
 
       matches.forEach(match => {
         let card = document.createElement("div");
-        card.className = "card";
+        card.className = "card highlight"; // highlight class for styling
         card.innerHTML = `
           <h3>${match.name}</h3>
           <p><strong>They Can Teach:</strong> ${match.skillHave}</p>
           <p><strong>They Want to Learn:</strong> ${match.skillWant}</p>
-          <p>🎉 This is a perfect skill swap match!</p>
+          <p>🎉 Perfect Skill Swap Match!</p>
         `;
         matchList.appendChild(card);
       });
