@@ -1,20 +1,23 @@
 from flask import Flask, request, jsonify
-from flask_pymongo import PyMongo
-from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
+from pymongo import MongoClient
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
 
-# 🔹 Update with your MongoDB Atlas connection string
-app.config["MONGO_URI"] = "your_mongodb_connection_uri"
+# Connect to MongoDB
+MONGO_URI = os.getenv("MONGO_URI")
+client = MongoClient(MONGO_URI)
+db = client["kaushalyaswap"]
+users = db["users"]
 
-mongo = PyMongo(app)
-users = mongo.db.users
-
-
-# ---------------- SIGNUP ----------------
-@app.route("/api/signup", methods=["POST"])
+# ✅ Route: Signup
+@app.route("/signup", methods=["POST"])
 def signup():
     data = request.json
     name = data.get("name")
@@ -22,51 +25,40 @@ def signup():
     password = data.get("password")
     skill = data.get("skill")
 
-    if not name or not email or not password or not skill:
-        return jsonify({"message": "All fields are required"}), 400
-
     if users.find_one({"email": email}):
-        return jsonify({"message": "User already exists"}), 400
+        return jsonify({"message": "Email already exists!"}), 400
 
-    hashed_password = generate_password_hash(password)
     users.insert_one({
         "name": name,
         "email": email,
-        "password": hashed_password,
+        "password": password,   # ⚠️ (for now plain text, later we’ll hash)
         "skill": skill
     })
 
-    return jsonify({
-        "message": "Signup successful!",
-        "user": {"name": name, "skill": skill}
-    }), 201
+    return jsonify({"message": "Signup successful!"}), 201
 
-
-# ---------------- LOGIN ----------------
-@app.route("/api/login", methods=["POST"])
-def login():
+# ✅ Route: Signin
+@app.route("/signin", methods=["POST"])
+def signin():
     data = request.json
     email = data.get("email")
     password = data.get("password")
 
-    if not email or not password:
-        return jsonify({"message": "Email and password required"}), 400
+    user = users.find_one({"email": email, "password": password})
+    if not user:
+        return jsonify({"message": "Invalid email or password"}), 401
 
-    user = users.find_one({"email": email})
-    if user and check_password_hash(user["password"], password):
-        return jsonify({
-            "message": "Login successful!",
-            "user": {"name": user["name"], "skill": user["skill"]}
-        }), 200
-
-    return jsonify({"message": "Invalid email or password"}), 401
+    return jsonify({
+        "message": "Signin successful!",
+        "name": user["name"],
+        "skill": user["skill"]
+    }), 200
 
 
-# ---------------- ROOT ----------------
-@app.route("/")
+@app.route("/", methods=["GET"])
 def home():
-    return "Backend is running with MongoDB!"
+    return jsonify({"message": "Backend is running!"})
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000)
