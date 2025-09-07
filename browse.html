@@ -4,181 +4,116 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Browse Directory - Kaushalya Swap</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #1f1c2c, #928DAB);
-      color: #fff;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
-
-    .container {
-      width: 80%;
-      margin: 50px auto;
-      background: rgba(0, 0, 0, 0.6);
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.5);
-    }
-
-    h1 {
-      margin-bottom: 20px;
-      color: #00e6e6;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-    }
-
-    table, th, td {
-      border: 1px solid #555;
-    }
-
-    th, td {
-      padding: 12px;
-      text-align: center;
-    }
-
-    th {
-      background-color: #2a2e38;
-      color: #00e6e6;
-    }
-
-    td {
-      background-color: #1f1f1f;
-    }
-
-    .back-btn {
-      display: inline-block;
-      background: #00e6e6;
-      color: #000;
-      padding: 10px 20px;
-      margin-top: 10px;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: 0.3s;
-    }
-
-    .back-btn:hover {
-      background: #00b3b3;
-    }
-
-    #matchesContainer {
-      margin-top: 20px;
-    }
-
-    .match-card {
-      background: #2a2e38;
-      color: white;
-      padding: 15px;
-      margin: 10px auto;
-      border-radius: 8px;
-      width: 70%;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-      text-align: left;
-    }
-
-    .match-card h3 {
-      margin-top: 0;
-      color: #00e6e6;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Browse Directory</h1>
+  <!-- Navbar -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">Kaushalya Swap</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="browse.html" class="active">Browse</a></li>
+        <li><a href="get-started.html">Get Started</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <!-- Directory table -->
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Skills Have</th>
-          <th>Skills Want</th>
-        </tr>
-      </thead>
-      <tbody id="userTable">
-        <!-- Users will load here -->
-      </tbody>
-    </table>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Browse the Skill Directory</h1>
+      <p>Find people to swap your skills with.</p>
+      <button onclick="findMatches()">🔎 Find My Matches</button>
+    </div>
+  </section>
 
-    <!-- Find Matches -->
-    <button class="back-btn" onclick="findMatches()">Find My Matches</button>
+  <!-- Directory -->
+  <section class="directory">
+    <h2>All Users</h2>
+    <div id="userList" class="card-container"></div>
+  </section>
 
-    <!-- Matches will appear here -->
-    <div id="matchesContainer"></div>
+  <!-- Matches -->
+  <section class="directory">
+    <h2>My Matches</h2>
+    <div id="matchList" class="card-container"></div>
+  </section>
 
-    <a href="get-started.html" class="back-btn">Back</a>
-  </div>
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Kaushalya Swap. All Rights Reserved.</p>
+  </footer>
 
   <script>
+    // Load all users
     function loadUsers() {
       let users = JSON.parse(localStorage.getItem("users")) || [];
-      let tableBody = document.getElementById("userTable");
-      tableBody.innerHTML = "";
+      let userList = document.getElementById("userList");
+      userList.innerHTML = "";
 
       if (users.length === 0) {
-        let row = document.createElement("tr");
-        row.innerHTML = "<td colspan='3'>No data found</td>";
-        tableBody.appendChild(row);
+        userList.innerHTML = "<p>No users found.</p>";
         return;
       }
 
       users.forEach(user => {
-        let row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${user.name}</td>
-          <td>${user.skillHave}</td>
-          <td>${user.skillWant}</td>
+        let card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <h3>${user.name}</h3>
+          <p><strong>Skill Have:</strong> ${user.skillHave}</p>
+          <p><strong>Skill Want:</strong> ${user.skillWant}</p>
         `;
-        tableBody.appendChild(row);
+        userList.appendChild(card);
       });
     }
 
+    // Find exact matches
     function findMatches() {
       let users = JSON.parse(localStorage.getItem("users")) || [];
       let loggedInEmail = localStorage.getItem("loggedInEmail");
-      let matchesContainer = document.getElementById("matchesContainer");
-      matchesContainer.innerHTML = "";
+      let matchList = document.getElementById("matchList");
+      matchList.innerHTML = "";
 
       if (!loggedInEmail) {
-        matchesContainer.innerHTML = "<p>Please sign in to find matches.</p>";
+        matchList.innerHTML = "<p>Please sign in to find matches.</p>";
         return;
       }
 
       let currentUser = users.find(u => u.email === loggedInEmail);
       if (!currentUser) {
-        matchesContainer.innerHTML = "<p>User not found. Please sign in again.</p>";
+        matchList.innerHTML = "<p>User not found. Please sign in again.</p>";
         return;
       }
 
-      let matches = users.filter(u =>
-        u.email !== loggedInEmail &&
-        u.skillHave.toLowerCase() === currentUser.skillWant.toLowerCase() &&
-        u.skillWant.toLowerCase() === currentUser.skillHave.toLowerCase()
+      let matches = users.filter(
+        u =>
+          u.email !== loggedInEmail &&
+          u.skillHave.toLowerCase() === currentUser.skillWant.toLowerCase() &&
+          u.skillWant.toLowerCase() === currentUser.skillHave.toLowerCase()
       );
 
       if (matches.length === 0) {
-        matchesContainer.innerHTML = "<p>No exact matches found right now.</p>";
-      } else {
-        matches.forEach(match => {
-          let card = document.createElement("div");
-          card.classList.add("match-card");
-          card.innerHTML = `
-            <h3>You can swap with ${match.name}!</h3>
-            <p><strong>${currentUser.name}</strong> can teach <strong>${currentUser.skillHave}</strong> and wants <strong>${currentUser.skillWant}</strong>.</p>
-            <p><strong>${match.name}</strong> can teach <strong>${match.skillHave}</strong> and wants <strong>${match.skillWant}</strong>.</p>
-          `;
-          matchesContainer.appendChild(card);
-        });
+        matchList.innerHTML = "<p>No exact matches found yet.</p>";
+        return;
       }
+
+      matches.forEach(match => {
+        let card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <h3>${match.name}</h3>
+          <p><strong>They Can Teach:</strong> ${match.skillHave}</p>
+          <p><strong>They Want to Learn:</strong> ${match.skillWant}</p>
+          <p>🎉 This is a perfect skill swap match!</p>
+        `;
+        matchList.appendChild(card);
+      });
     }
 
-    loadUsers();
+    // Load directory on page load
+    window.onload = loadUsers;
   </script>
 </body>
 </html>
