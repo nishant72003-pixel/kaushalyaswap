@@ -78,16 +78,12 @@
       margin-top: 10px;
       color: #666;
     }
-
-    /* Popup modal */
+    /* Popup */
     .popup {
       display: none;
       position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: rgba(0,0,0,0.6);
       justify-content: center;
       align-items: center;
@@ -95,31 +91,19 @@
     .popup-content {
       background: #fff;
       color: #333;
-      padding: 25px;
+      padding: 20px 30px;
       border-radius: 12px;
       text-align: center;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-      animation: fadeIn 0.4s;
+      max-width: 300px;
     }
-    .popup-content h3 {
-      margin: 0 0 15px;
-      color: #16a085;
-    }
-    .close-btn {
+    .popup-content button {
+      margin-top: 15px;
+      padding: 8px 16px;
       background: #16a085;
       color: #fff;
       border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
+      border-radius: 6px;
       cursor: pointer;
-      transition: background 0.3s;
-    }
-    .close-btn:hover {
-      background: #138d75;
-    }
-    @keyframes fadeIn {
-      from {opacity: 0; transform: scale(0.9);}
-      to {opacity: 1; transform: scale(1);}
     }
   </style>
 </head>
@@ -138,18 +122,20 @@
   <!-- Get Started Form -->
   <div class="container">
     <h2>Get Started</h2>
-    <form onsubmit="showPopup('🎉 Sign Up Successful!', 'dashboard.html'); return false;">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <input type="password" name="password" placeholder="Password (max 8 digits)" maxlength="8" pattern="[0-9]{1,8}" required>
-      <input type="text" name="skill" placeholder="Your Skill" required>
+    <!-- Sign Up -->
+    <form onsubmit="handleSignUp(); return false;">
+      <input type="text" id="signup-name" placeholder="Your Name" required>
+      <input type="email" id="signup-email" placeholder="Your Email" required>
+      <input type="password" id="signup-password" placeholder="Password (max 8 digits)" maxlength="8" pattern="[0-9]{1,8}" required>
+      <input type="text" id="signup-skill" placeholder="Your Skill" required>
       <button type="submit">Sign Up</button>
     </form>
 
     <p class="note">Already have an account? Sign In below:</p>
-    <form onsubmit="showPopup('✅ Sign In Successful!', 'dashboard.html'); return false;">
-      <input type="email" name="email" placeholder="Your Email" required>
-      <input type="password" name="password" placeholder="Password" required>
+    <!-- Sign In -->
+    <form onsubmit="handleSignIn(); return false;">
+      <input type="email" id="signin-email" placeholder="Your Email" required>
+      <input type="password" id="signin-password" placeholder="Password" required>
       <button type="submit">Sign In</button>
     </form>
   </div>
@@ -157,24 +143,56 @@
   <!-- Popup -->
   <div class="popup" id="popup">
     <div class="popup-content">
-      <h3 id="popup-message"></h3>
-      <button class="close-btn" onclick="closePopup()">OK</button>
+      <p id="popup-message">Message here</p>
+      <button onclick="closePopup()">OK</button>
     </div>
   </div>
 
   <script>
-    let redirectUrl = null;
-
-    function showPopup(message, url = null) {
+    function showPopup(message, redirectUrl = null) {
       document.getElementById("popup-message").textContent = message;
-      document.getElementById("popup").style.display = "flex";
-      redirectUrl = url;
+      const popup = document.getElementById("popup");
+      popup.style.display = "flex";
+
+      popup.dataset.redirect = redirectUrl;
     }
 
     function closePopup() {
-      document.getElementById("popup").style.display = "none";
+      const popup = document.getElementById("popup");
+      const redirectUrl = popup.dataset.redirect;
+      popup.style.display = "none";
+
       if (redirectUrl) {
         window.location.href = redirectUrl;
+      }
+    }
+
+    function handleSignUp() {
+      const name = document.getElementById("signup-name").value;
+      const email = document.getElementById("signup-email").value;
+      const password = document.getElementById("signup-password").value;
+      const skill = document.getElementById("signup-skill").value;
+
+      // Save to localStorage
+      localStorage.setItem("name", name);
+      localStorage.setItem("email", email);
+      localStorage.setItem("password", password);
+      localStorage.setItem("skill", skill);
+
+      showPopup("🎉 Sign Up Successful!", "dashboard.html");
+    }
+
+    function handleSignIn() {
+      const email = document.getElementById("signin-email").value;
+      const password = document.getElementById("signin-password").value;
+
+      const savedEmail = localStorage.getItem("email");
+      const savedPassword = localStorage.getItem("password");
+
+      if (email === savedEmail && password === savedPassword) {
+        showPopup("✅ Sign In Successful!", "dashboard.html");
+      } else {
+        showPopup("❌ Invalid Email or Password");
       }
     }
   </script>
