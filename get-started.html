@@ -163,13 +163,18 @@
         const data = await res.json();
 
         if (res.ok) {
-          document.getElementById("loginMessage").innerText = "Signed in successfully!";
-          document.getElementById("loginMessage").style.color = "green";
+  document.getElementById("loginMessage").innerText = "Signed in successfully!";
+  document.getElementById("loginMessage").style.color = "green";
 
-          // Redirect after short delay
-          setTimeout(() => {
-            window.location.href = "dashboard.html";
-          }, 1500);
+  // Save user info in localStorage
+  localStorage.setItem("userName", data.user.name);
+  localStorage.setItem("userSkill", data.user.skill);
+
+  // Redirect after short delay
+  setTimeout(() => {
+    window.location.href = "dashboard.html";
+  }, 1500);
+}
         } else {
           document.getElementById("loginMessage").innerText = data.message || "Login failed.";
           document.getElementById("loginMessage").style.color = "red";
@@ -183,3 +188,4 @@
   </script>
 </body>
 </html>
+
