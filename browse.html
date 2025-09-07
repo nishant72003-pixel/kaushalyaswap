@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Browse Directory - Kaushalya Swap</title>
+  <title>Browse - Kaushalya Swap</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -21,16 +21,21 @@
   <section class="hero">
     <div class="hero-content">
       <h1>Browse Directory</h1>
-      <p>Find people to swap your skills with</p>
+      <p>Explore users and find skill swap matches.</p>
+      <button onclick="findMatches()">Find My Matches</button>
     </div>
   </section>
 
-  <!-- Directory Section -->
+  <!-- All Users -->
   <section class="directory">
-    <h2>Available Members</h2>
-    <div class="card-container" id="directory-list">
-      <!-- User cards will be dynamically inserted here -->
-    </div>
+    <h2>All Users</h2>
+    <div id="user-list" class="cards"></div>
+  </section>
+
+  <!-- My Matches -->
+  <section class="directory">
+    <h2>My Matches</h2>
+    <div id="match-list" class="cards"></div>
   </section>
 
   <!-- Footer -->
@@ -40,40 +45,64 @@
 
   <!-- JavaScript -->
   <script>
-    // Fetch logged-in user from localStorage
-    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-    const directoryList = document.getElementById("directory-list");
-
-    // Fetch all users from localStorage
+    const userList = document.getElementById("user-list");
+    const matchList = document.getElementById("match-list");
     const users = JSON.parse(localStorage.getItem("users")) || [];
+    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
-    if (users.length === 0) {
-      directoryList.innerHTML = "<p>No members found.</p>";
-    } else {
+    // Show all users except self
+    function displayUsers() {
+      userList.innerHTML = "";
+      if (users.length === 0) {
+        userList.innerHTML = "<p>No users found.</p>";
+        return;
+      }
       users.forEach(user => {
-        if (loggedInUser && user.username === loggedInUser.username) return; // Skip self
-
-        const card = document.createElement("div");
-        card.classList.add("card");
-
-        // Exact Match Highlight
-        if (
-          loggedInUser &&
-          user.skill.toLowerCase() === loggedInUser.skillWant.toLowerCase() &&
-          user.skillWant.toLowerCase() === loggedInUser.skill.toLowerCase()
-        ) {
-          card.classList.add("highlight");
+        if (!loggedInUser || user.username !== loggedInUser.username) {
+          const card = document.createElement("div");
+          card.classList.add("card");
+          card.innerHTML = `
+            <h3>${user.username}</h3>
+            <p><strong>Skill Have:</strong> ${user.skill}</p>
+            <p><strong>Skill Want:</strong> ${user.skillWant}</p>
+          `;
+          userList.appendChild(card);
         }
-
-        card.innerHTML = `
-          <h3>${user.username}</h3>
-          <p><strong>Has Skill:</strong> ${user.skill}</p>
-          <p><strong>Wants Skill:</strong> ${user.skillWant}</p>
-        `;
-
-        directoryList.appendChild(card);
       });
     }
+
+    // Find matches
+    function findMatches() {
+      matchList.innerHTML = "";
+      if (!loggedInUser) {
+        matchList.innerHTML = "<p>Please sign in first.</p>";
+        return;
+      }
+
+      const matches = users.filter(user =>
+        user.username !== loggedInUser.username &&
+        user.skill === loggedInUser.skillWant &&
+        user.skillWant === loggedInUser.skill
+      );
+
+      if (matches.length === 0) {
+        matchList.innerHTML = "<p>No matches found yet.</p>";
+      } else {
+        matches.forEach(user => {
+          const card = document.createElement("div");
+          card.classList.add("card");
+          card.innerHTML = `
+            <h3>${user.username}</h3>
+            <p><strong>They Can Teach:</strong> ${user.skill}</p>
+            <p><strong>They Want:</strong> ${user.skillWant}</p>
+            <p><em>✅ This is a swap match!</em></p>
+          `;
+          matchList.appendChild(card);
+        });
+      }
+    }
+
+    displayUsers();
   </script>
 </body>
 </html>
