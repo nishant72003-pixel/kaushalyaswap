@@ -8,112 +8,72 @@
 </head>
 <body>
   <!-- Navbar -->
-  <header>
-    <nav class="navbar">
-      <div class="logo">Kaushalya Swap</div>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="browse.html" class="active">Browse</a></li>
-        <li><a href="get-started.html">Get Started</a></li>
-      </ul>
-    </nav>
-  </header>
+  <nav class="navbar">
+    <div class="logo">Kaushalya Swap</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="get-started.html">Get Started</a></li>
+      <li><a href="browse.html" class="active">Browse</a></li>
+    </ul>
+  </nav>
 
   <!-- Hero Section -->
   <section class="hero">
     <div class="hero-content">
-      <h1>Browse the Skill Directory</h1>
-      <p>Find people to swap your skills with.</p>
-      <button onclick="findMatches()">🔎 Find My Matches</button>
+      <h1>Browse Directory</h1>
+      <p>Find people to swap your skills with</p>
     </div>
   </section>
 
-  <!-- All Users Section -->
+  <!-- Directory Section -->
   <section class="directory">
-    <h2>All Users</h2>
-    <div id="userList" class="card-container"></div>
-  </section>
-
-  <!-- Matches Section -->
-  <section class="directory">
-    <h2>My Matches</h2>
-    <div id="matchList" class="card-container"></div>
+    <h2>Available Members</h2>
+    <div class="card-container" id="directory-list">
+      <!-- User cards will be dynamically inserted here -->
+    </div>
   </section>
 
   <!-- Footer -->
   <footer>
-    <p>&copy; 2025 Kaushalya Swap. All Rights Reserved.</p>
+    <p>&copy; 2025 Kaushalya Swap. All rights reserved.</p>
   </footer>
 
+  <!-- JavaScript -->
   <script>
-    // Load all users
-    function loadUsers() {
-      let users = JSON.parse(localStorage.getItem("users")) || [];
-      let userList = document.getElementById("userList");
-      userList.innerHTML = "";
+    // Fetch logged-in user from localStorage
+    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    const directoryList = document.getElementById("directory-list");
 
-      if (users.length === 0) {
-        userList.innerHTML = "<p>No users found.</p>";
-        return;
-      }
+    // Fetch all users from localStorage
+    const users = JSON.parse(localStorage.getItem("users")) || [];
 
+    if (users.length === 0) {
+      directoryList.innerHTML = "<p>No members found.</p>";
+    } else {
       users.forEach(user => {
-        let card = document.createElement("div");
-        card.className = "card";
+        if (loggedInUser && user.username === loggedInUser.username) return; // Skip self
+
+        const card = document.createElement("div");
+        card.classList.add("card");
+
+        // Exact Match Highlight
+        if (
+          loggedInUser &&
+          user.skill.toLowerCase() === loggedInUser.skillWant.toLowerCase() &&
+          user.skillWant.toLowerCase() === loggedInUser.skill.toLowerCase()
+        ) {
+          card.classList.add("highlight");
+        }
+
         card.innerHTML = `
-          <h3>${user.name}</h3>
-          <p><strong>Skill Have:</strong> ${user.skillHave}</p>
-          <p><strong>Skill Want:</strong> ${user.skillWant}</p>
+          <h3>${user.username}</h3>
+          <p><strong>Has Skill:</strong> ${user.skill}</p>
+          <p><strong>Wants Skill:</strong> ${user.skillWant}</p>
         `;
-        userList.appendChild(card);
+
+        directoryList.appendChild(card);
       });
     }
-
-    // Find exact matches
-    function findMatches() {
-      let users = JSON.parse(localStorage.getItem("users")) || [];
-      let loggedInEmail = localStorage.getItem("loggedInEmail");
-      let matchList = document.getElementById("matchList");
-      matchList.innerHTML = "";
-
-      if (!loggedInEmail) {
-        matchList.innerHTML = "<p>Please sign in to find matches.</p>";
-        return;
-      }
-
-      let currentUser = users.find(u => u.email === loggedInEmail);
-      if (!currentUser) {
-        matchList.innerHTML = "<p>User not found. Please sign in again.</p>";
-        return;
-      }
-
-      let matches = users.filter(
-        u =>
-          u.email !== loggedInEmail &&
-          u.skillHave.toLowerCase() === currentUser.skillWant.toLowerCase() &&
-          u.skillWant.toLowerCase() === currentUser.skillHave.toLowerCase()
-      );
-
-      if (matches.length === 0) {
-        matchList.innerHTML = "<p>No exact matches found yet.</p>";
-        return;
-      }
-
-      matches.forEach(match => {
-        let card = document.createElement("div");
-        card.className = "card highlight"; // highlight class for styling
-        card.innerHTML = `
-          <h3>${match.name}</h3>
-          <p><strong>They Can Teach:</strong> ${match.skillHave}</p>
-          <p><strong>They Want to Learn:</strong> ${match.skillWant}</p>
-          <p>🎉 Perfect Skill Swap Match!</p>
-        `;
-        matchList.appendChild(card);
-      });
-    }
-
-    // Load directory on page load
-    window.onload = loadUsers;
   </script>
 </body>
 </html>
