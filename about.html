@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About — Kaushalya Swap</title>
+  <style>
+    :root {
+      --bg: #0b0e14;
+      --card: #0f1720;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #14b8a6;
+      --radius: 16px;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #0b0e14 0%, #0a0d12 100%);
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+    header { position: sticky; top: 0; backdrop-filter: blur(8px); background: rgba(11,14,20,.85); border-bottom: 1px solid rgba(255,255,255,.06); }
+    nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; }
+    .brand img { width: 40px; height: 40px; border-radius: 8px; background: linear-gradient(135deg, #14b8a6, #0d9488); padding: 6px; }
+    .brand span { font-size: 18px; }
+
+    main { margin-top: 40px; }
+    section { margin-bottom: 40px; }
+    h1, h2 { color: var(--accent); }
+    p { color: var(--muted); line-height: 1.6; }
+
+    .values-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+    .card { background: var(--card); border-radius: var(--radius); padding: 20px; border: 1px solid rgba(255,255,255,.06); box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+
+    footer { margin-top: 40px; padding: 20px; text-align: center; border-top: 1px solid rgba(255,255,255,.08); color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="brand">
+          <img src="logo.png" alt="Logo" />
+          <span>Kaushalya Swap</span>
+        </div>
+        <div class="nav-links">
+          <a href="index.html" style="color:var(--text);text-decoration:none;">Home</a>
+          <a href="skills.html" style="color:var(--text);text-decoration:none; margin-left:12px;">Browse</a>
+          <a href="get-started.html" style="color:var(--text);text-decoration:none; margin-left:12px;">Get Started</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section>
+      <h1>About Kaushalya Swap</h1>
+      <p>
+        Kaushalya Swap is a community-driven platform where people can
+        <strong>share their skills and learn from others</strong>.  
+        Our mission is to make learning accessible, collaborative, and
+        rewarding by enabling skill exchange instead of traditional payment.
+      </p>
+    </section>
+
+    <section>
+      <h2>Our Values</h2>
+      <div class="values-grid">
+        <div class="card">
+          <h3>Collaboration</h3>
+          <p>We believe in learning together, building bonds through shared knowledge.</p>
+        </div>
+        <div class="card">
+          <h3>Accessibility</h3>
+          <p>Everyone has something to teach and something to learn, regardless of background.</p>
+        </div>
+        <div class="card">
+          <h3>Growth</h3>
+          <p>Skill-sharing encourages continuous personal and professional growth.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Who We Are</h2>
+      <p>
+        We are a passionate group of learners and educators committed to
+        making knowledge exchange simple, fun, and effective.  
+        Together, we aim to create a global learning network.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> Kaushalya Swap • Empowering through Skills</p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

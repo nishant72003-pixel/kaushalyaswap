@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Browse Skills — Kaushalya Swap</title>
+  <style>
+    :root {
+      --bg: #0b0e14;
+      --card: #0f1720;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #14b8a6;
+      --radius: 16px;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #0b0e14 0%, #0a0d12 100%);
+    }
+    .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+    header { position: sticky; top: 0; backdrop-filter: blur(8px); background: rgba(11,14,20,.85); border-bottom: 1px solid rgba(255,255,255,.06); }
+    nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; }
+    .brand img { width: 40px; height: 40px; border-radius: 8px; background: linear-gradient(135deg, #14b8a6, #0d9488); padding: 6px; }
+    .brand span { font-size: 18px; }
+
+    .search-bar { margin: 20px 0; display: flex; gap: 10px; }
+    .search-bar input { flex: 1; padding: 12px; border-radius: 12px; border: none; background: #1e293b; color: var(--text); }
+    .search-bar button { padding: 12px 18px; border: none; border-radius: 12px; background: var(--accent); color: #061314; font-weight: 700; cursor: pointer; }
+
+    .skills-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+    .card { background: var(--card); border-radius: var(--radius); padding: 18px; border: 1px solid rgba(255,255,255,.06); box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+    .card h3 { margin: 0 0 6px; }
+    .card p { margin: 6px 0; color: var(--muted); font-size: 14px; }
+
+    footer { margin-top: 40px; padding: 20px; text-align: center; border-top: 1px solid rgba(255,255,255,.08); color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="brand">
+          <img src="logo.png" alt="Logo" />
+          <span>Kaushalya Swap</span>
+        </div>
+        <div class="nav-links">
+          <a href="index.html" style="color:var(--text);text-decoration:none;">Home</a>
+          <a href="about.html" style="color:var(--text);text-decoration:none; margin-left:12px;">About</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Browse Skills</h1>
+    <p class="lead">Discover what others are offering and find the right match for your learning journey.</p>
+
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search skills...">
+      <button onclick="filterSkills()">Search</button>
+    </div>
+
+    <div class="skills-grid" id="skillsGrid">
+      <div class="card"><h3>Web Development</h3><p>Learn the basics of HTML, CSS, and JavaScript.</p></div>
+      <div class="card"><h3>Graphic Design</h3><p>Master tools like Photoshop, Illustrator, and Canva.</p></div>
+      <div class="card"><h3>Public Speaking</h3><p>Boost your confidence and communication skills.</p></div>
+      <div class="card"><h3>Cooking</h3><p>Explore Indian, Italian, and fusion cuisines.</p></div>
+      <div class="card"><h3>Guitar Lessons</h3><p>Learn chords, strumming, and your favorite songs.</p></div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> Kaushalya Swap • Browse and Learn</p>
+  </footer>
+
+  <script>
+    // Filter skills
+    function filterSkills() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.skills-grid .card');
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(input) ? 'block' : 'none';
+      });
+    }
+    // Year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

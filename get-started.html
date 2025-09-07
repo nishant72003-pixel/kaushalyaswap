@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Get Started — Kaushalya Swap</title>
+  <style>
+    :root {
+      --bg: #0b0e14;
+      --card: #0f1720;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #14b8a6;
+      --radius: 16px;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #0b0e14 0%, #0a0d12 100%);
+    }
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+    header { position: sticky; top: 0; backdrop-filter: blur(8px); background: rgba(11,14,20,.85); border-bottom: 1px solid rgba(255,255,255,.06); }
+    nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; }
+    .brand img { width: 40px; height: 40px; border-radius: 8px; background: linear-gradient(135deg, #14b8a6, #0d9488); padding: 6px; }
+    .brand span { font-size: 18px; }
+
+    main { margin-top: 40px; }
+    .card { background: var(--card); border-radius: var(--radius); padding: 24px; border: 1px solid rgba(255,255,255,.06); box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+    .card h1 { margin-top: 0; text-align: center; }
+
+    form { display: flex; flex-direction: column; gap: 16px; }
+    input, textarea { padding: 12px; border-radius: 12px; border: none; background: #1e293b; color: var(--text); font-size: 15px; }
+    input:focus, textarea:focus { outline: 2px solid var(--accent); }
+    button { padding: 14px; border: none; border-radius: 12px; background: var(--accent); color: #061314; font-weight: 700; cursor: pointer; font-size: 16px; }
+    button:hover { opacity: 0.9; }
+
+    footer { margin-top: 40px; padding: 20px; text-align: center; border-top: 1px solid rgba(255,255,255,.08); color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="brand">
+          <img src="logo.png" alt="Logo" />
+          <span>Kaushalya Swap</span>
+        </div>
+        <div class="nav-links">
+          <a href="index.html" style="color:var(--text);text-decoration:none;">Home</a>
+          <a href="skills.html" style="color:var(--text);text-decoration:none; margin-left:12px;">Browse</a>
+          <a href="about.html" style="color:var(--text);text-decoration:none; margin-left:12px;">About</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <h1>Get Started</h1>
+      <form onsubmit="return validateForm()">
+        <input type="text" name="name" placeholder="Full Name" required />
+        <input type="email" name="email" placeholder="Email Address" required />
+        <input type="password" name="password" placeholder="Numeric Password (max 8 digits)" 
+               required pattern="[0-9]{1,8}" maxlength="8" />
+        <input type="text" name="teach" placeholder="Skills you can teach" required />
+        <input type="text" name="learn" placeholder="Skills you want to learn" required />
+        <button type="submit">Join Now</button>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> Kaushalya Swap • Learn by Sharing</p>
+  </footer>
+
+  <script>
+    // Validate password (numbers only, max 8 digits)
+    function validateForm() {
+      const password = document.querySelector('input[name=\"password\"]').value;
+      if (!/^[0-9]{1,8}$/.test(password)) {
+        alert(\"Password must be only numbers and up to 8 digits.\");
+        return false;
+      }
+      return true;
+    }
+    // Footer year
+    document.getElementById(\"year\").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

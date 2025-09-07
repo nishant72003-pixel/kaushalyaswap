@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SkillSwap — Welcome</title>
+  <style>
+    :root {
+      --bg: #0b0e14;
+      --card: #0f1720;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #14b8a6; /* turquoise */
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 80% -10%, rgba(20,184,166,.15), transparent),
+        linear-gradient(180deg, #0b0e14 0%, #0b0e14 60%, #0a0d12 100%);
+    }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+    /* Header / Nav */
+    header { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(8px); background: rgba(11,14,20,.65); border-bottom: 1px solid rgba(255,255,255,.06); }
+    nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .3px; }
+    .brand img { width: 48px; height: 48px; border-radius: 12px; padding: 6px; background: linear-gradient(135deg, #14b8a6, #0d9488); box-shadow: 0 0 12px rgba(20, 184, 166, 0.6); }
+    .brand span { font-size: 18px; }
+
+    .nav-links a { color: var(--text); text-decoration: none; margin-left: 18px; font-weight: 600; opacity: .9; }
+    .nav-links a:hover { opacity: 1; }
+
+    .btn { display: inline-block; padding: 12px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,.12); background: #ffffff10; color: var(--text); text-decoration: none; font-weight: 700; transition: transform .15s ease, filter .15s ease; }
+    .btn.primary { background: linear-gradient(180deg, var(--accent), #0ea5a5); border: none; color: #061314; }
+    .btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
+
+    /* Hero */
+    .hero { padding: 72px 0 48px; text-align: center; }
+    .hero-logo img { width: 120px; height: 120px; border-radius: 20px; padding: 12px; background: linear-gradient(135deg, #14b8a6, #0d9488); box-shadow: 0 0 20px rgba(20, 184, 166, 0.7); margin-bottom: 20px; }
+    h1 { font-size: clamp(32px, 5vw, 54px); margin: 0 0 10px; letter-spacing: .2px; }
+    .lead { font-size: clamp(16px, 2.4vw, 20px); color: var(--muted); margin: 0 auto 22px; max-width: 720px; }
+    .cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* Cards grid */
+    .grid { display: grid; gap: 16px; grid-template-columns: repeat(3, 1fr); margin: 40px 0; }
+    .card { background: var(--card); border: 1px solid rgba(255,255,255,.06); border-radius: var(--radius); padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+    .card h3 { margin: 0 0 6px; }
+    .card p { margin: 8px 0 0; color: var(--muted); }
+
+    .section-title { text-align: center; margin: 40px 0 8px; }
+
+    /* Steps */
+    .steps { counter-reset: step; }
+    .step { display: flex; gap: 14px; align-items: flex-start; }
+    .step + .step { margin-top: 12px; }
+    .step::before { counter-increment: step; content: counter(step); display: grid; place-items: center; flex: 0 0 36px; height: 36px; border-radius: 10px; background: #ffffff10; border: 1px solid rgba(255,255,255,.1); font-weight: 800; }
+
+    footer { padding: 28px 0; border-top: 1px solid rgba(255,255,255,.08); color: var(--muted); text-align: center; }
+
+    /* Mobile */
+    .menu-toggle { display: none; }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .menu-toggle { display: inline-flex; gap: 8px; align-items: center; background: #ffffff10; border: 1px solid rgba(255,255,255,.12); padding: 8px 12px; border-radius: 10px; color: var(--text); }
+      .nav-open .nav-links { display: flex; position: absolute; top: 64px; left: 0; right: 0; background: rgba(11,14,20,.98); padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,.06); }
+      .nav-open nav { flex-wrap: wrap; }
+      .nav-open .nav-links a { margin: 8px 10px 8px 0; display: inline-block; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Welcome page (index.html) -->
+  <header>
+    <div class="container">
+      <nav>
+        <div class="brand" aria-label="SkillSwap home">
+          <img src="logo.png" alt="Kaushalya Swap logo" />
+          <span>Kaushalya Swap</span>
+        </div>
+        <div class="nav-links" role="navigation" aria-label="Primary">
+          <a href="#how">How it works</a>
+          <a href="skills.html">Browse skills</a>
+          <a href="about.html">About</a>
+        </div>
+        <div class="nav-actions">
+          <a class="btn" href="skills.html">Browse</a>
+          <a class="btn primary" href="get-started.html">Get Started</a>
+          <button class="menu-toggle" id="menuBtn" aria-expanded="false" aria-controls="menu">Menu ▾</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <div class="hero-logo">
+        <img src="logo.png" alt="Kaushalya Swap logo" />
+      </div>
+      <h1>Exchange skills. Learn faster.</h1>
+      <p class="lead">Welcome to Kaushalya Swap — a simple place to offer what you know and learn what you don’t. Post a skill, find a partner, and swap.</p>
+      <div class="cta">
+        <a class="btn primary" href="get-started.html">Get Started</a>
+        <a class="btn" href="skills.html">Browse Skills</a>
+      </div>
+    </section>
+
+    <section class="container">
+      <h2 class="section-title">Why Kaushalya Swap?</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Post a Skill</h3>
+          <p>Offer tutoring, design help, coding, music, languages — anything you’re good at.</p>
+        </div>
+        <div class="card">
+          <h3>Request a Swap</h3>
+          <p>Find someone who wants to trade; agree on time and scope.</p>
+        </div>
+        <div class="card">
+          <h3>Grow Together</h3>
+          <p>Practice regularly and build your reputation over time.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="how" class="container">
+      <h2 class="section-title">How it works</h2>
+      <div class="card">
+        <div class="steps">
+          <div class="step"><p><strong>Create an offer</strong> describing your skill and what you’d like in return.</p></div>
+          <div class="step"><p><strong>Match up</strong> by browsing skills and sending a swap request.</p></div>
+          <div class="step"><p><strong>Swap and review</strong> — meet, learn, and leave feedback.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© <span id="year"></span> Kaushalya Swap • Made for learning</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle (beginner-friendly JS)
+    const menuBtn = document.getElementById('menuBtn');
+    if (menuBtn) {
+      menuBtn.addEventListener('click', () => {
+        const opened = document.body.classList.toggle('nav-open');
+        menuBtn.setAttribute('aria-expanded', opened ? 'true' : 'false');
+      });
+    }
+    // Year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
