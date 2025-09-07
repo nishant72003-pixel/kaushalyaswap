@@ -3,157 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kaushalya Swap - Get Started</title>
+  <title>Get Started - Kaushalya Swap</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #1c1f26, #2a2e38);
-      color: white;
-      height: 100%;
-    }
-
-    nav {
-      background: rgba(0, 0, 0, 0.8);
-      padding: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    nav h1 {
-      color: turquoise;
-      margin: 0;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 15px;
-    }
-
-    .hero {
-      height: calc(100vh - 60px);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 20px;
-    }
-
-    .hero h2 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      color: turquoise;
-    }
-
-    .hero p {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-    }
-
-    .hero button {
-      background: turquoise;
-      color: black;
-      border: none;
-      padding: 12px 25px;
-      margin: 10px;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .hero button:hover {
-      background: #14b8a6;
-    }
-
-    /* Modal Styles */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.7);
-    }
-
-    .modal-content {
-      background-color: #2a2e38;
-      margin: 10% auto;
-      padding: 20px;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 400px;
-      color: white;
-    }
-
-    .modal-content h2 {
-      color: turquoise;
-      margin-bottom: 20px;
-    }
-
-    .modal-content input {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border: none;
-      border-radius: 5px;
-    }
-
-    .modal-content button {
-      width: 100%;
-      padding: 12px;
-      background: turquoise;
-      color: black;
-      border: none;
-      border-radius: 5px;
-      margin-top: 10px;
-      cursor: pointer;
-    }
-
-    .modal-content button:hover {
-      background: #14b8a6;
-    }
-
-    .close {
-      float: right;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: white;
-    }
-
-    footer {
-      background: rgba(0,0,0,0.8);
-      text-align: center;
-      padding: 15px;
-      color: #aaa;
-    }
-  </style>
 </head>
 <body>
   <!-- Navbar -->
-  <nav>
-    <h1>Kaushalya Swap</h1>
-    <div>
-      <a href="index.html">Home</a>
-      <a href="browse.html">Browse</a>
-    </div>
-  </nav>
+  <header>
+    <nav class="navbar">
+      <div class="logo">Kaushalya Swap</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="browse.html">Browse</a></li>
+        <li><a href="get-started.html" class="active">Get Started</a></li>
+      </ul>
+    </nav>
+  </header>
 
   <!-- Hero Section -->
-  <div class="hero">
-    <h2>Get Started with Kaushalya Swap</h2>
-    <p>Join our community to share your skills and learn from others.</p>
-    <button onclick="openModal('signupModal')">Sign Up</button>
-    <button onclick="openModal('signinModal')">Sign In</button>
-  </div>
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Get Started with Kaushalya Swap</h1>
+      <p>Sign up to share your skills or sign in if you already have an account.</p>
+      <div class="buttons">
+        <button onclick="openModal('signupModal')">Sign Up</button>
+        <button onclick="openModal('signinModal')">Sign In</button>
+      </div>
+    </div>
+  </section>
 
   <!-- Sign Up Modal -->
   <div id="signupModal" class="modal">
@@ -161,11 +37,11 @@
       <span class="close" onclick="closeModal('signupModal')">&times;</span>
       <h2>Sign Up</h2>
       <form id="signupForm">
-        <input type="text" id="signupName" placeholder="Enter your name" required>
-        <input type="email" id="signupEmail" placeholder="Enter your email" required>
-        <input type="password" id="signupPassword" placeholder="Enter your password" required>
-        <input type="text" id="signupSkillHave" placeholder="Skills you HAVE" required>
-        <input type="text" id="signupSkillWant" placeholder="Skills you WANT" required>
+        <input type="text" id="signupName" placeholder="Full Name" required>
+        <input type="email" id="signupEmail" placeholder="Email" required>
+        <input type="password" id="signupPassword" placeholder="Password (max 8 digits)" maxlength="8" pattern="[0-9]{1,8}" required>
+        <input type="text" id="signupSkillHave" placeholder="Skill You Have" required>
+        <input type="text" id="signupSkillWant" placeholder="Skill You Want" required>
         <button type="submit">Sign Up</button>
       </form>
     </div>
@@ -177,18 +53,20 @@
       <span class="close" onclick="closeModal('signinModal')">&times;</span>
       <h2>Sign In</h2>
       <form id="signinForm">
-        <input type="email" id="signinEmail" placeholder="Enter your email" required>
-        <input type="password" id="signinPassword" placeholder="Enter your password" required>
+        <input type="email" id="signinEmail" placeholder="Email" required>
+        <input type="password" id="signinPassword" placeholder="Password" required>
         <button type="submit">Sign In</button>
       </form>
     </div>
   </div>
 
+  <!-- Footer -->
   <footer>
-    <p>© 2025 Kaushalya Swap. All Rights Reserved.</p>
+    <p>&copy; 2025 Kaushalya Swap. All Rights Reserved.</p>
   </footer>
 
   <script>
+    // Modal functions
     function openModal(id) {
       document.getElementById(id).style.display = "block";
     }
@@ -196,38 +74,47 @@
       document.getElementById(id).style.display = "none";
     }
 
-    // Signup
-    document.getElementById("signupForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const name = document.getElementById("signupName").value;
-      const email = document.getElementById("signupEmail").value;
-      const password = document.getElementById("signupPassword").value;
-      const skillHave = document.getElementById("signupSkillHave").value;
-      const skillWant = document.getElementById("signupSkillWant").value;
+    // Sign Up
+    document.getElementById("signupForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      let name = document.getElementById("signupName").value;
+      let email = document.getElementById("signupEmail").value;
+      let password = document.getElementById("signupPassword").value;
+      let skillHave = document.getElementById("signupSkillHave").value;
+      let skillWant = document.getElementById("signupSkillWant").value;
 
       let users = JSON.parse(localStorage.getItem("users")) || [];
+
+      if (users.find(u => u.email === email)) {
+        alert("User already exists! Please sign in.");
+        return;
+      }
+
       users.push({ name, email, password, skillHave, skillWant });
       localStorage.setItem("users", JSON.stringify(users));
 
-      alert("Signup successful!");
+      alert("Sign up successful! Please sign in.");
       document.getElementById("signupForm").reset();
-      closeModal("signupModal");
+      closeModal('signupModal');
     });
 
-    // Signin
-    document.getElementById("signinForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const email = document.getElementById("signinEmail").value;
-      const password = document.getElementById("signinPassword").value;
+    // Sign In
+    document.getElementById("signinForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      let email = document.getElementById("signinEmail").value;
+      let password = document.getElementById("signinPassword").value;
 
       let users = JSON.parse(localStorage.getItem("users")) || [];
       let user = users.find(u => u.email === email && u.password === password);
 
       if (user) {
-        alert("Sign in successful! Welcome " + user.name);
-        window.location.href = "browse.html";
+        alert("Sign in successful!");
+        localStorage.setItem("loggedInEmail", email); // ✅ Save login info
+        window.location.href = "browse.html"; // Redirect to browse
       } else {
-        alert("Invalid email or password!");
+        alert("Invalid email or password.");
       }
     });
   </script>
