@@ -3,69 +3,96 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kaushalya Swap - Browse Directory</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Browse Directory - Kaushalya Swap</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f8f9fa;
+      background: linear-gradient(135deg, #1f1c2c, #928DAB);
+      color: #fff;
+      text-align: center;
       margin: 0;
       padding: 0;
     }
 
     .container {
-      padding: 30px;
-      text-align: center;
+      width: 80%;
+      margin: 50px auto;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.5);
     }
 
     h1 {
-      color: #222;
       margin-bottom: 20px;
+      color: #00e6e6;
     }
 
     table {
-      margin: 0 auto;
+      width: 100%;
       border-collapse: collapse;
-      width: 80%;
-      background: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #555;
     }
 
     th, td {
-      border: 1px solid #ddd;
       padding: 12px;
       text-align: center;
     }
 
     th {
-      background: #007bff;
-      color: white;
+      background-color: #2a2e38;
+      color: #00e6e6;
     }
 
-    tr:nth-child(even) {
-      background: #f2f2f2;
+    td {
+      background-color: #1f1f1f;
     }
 
     .back-btn {
       display: inline-block;
-      margin-top: 20px;
+      background: #00e6e6;
+      color: #000;
       padding: 10px 20px;
-      background: #007bff;
-      color: white;
-      border-radius: 5px;
+      margin-top: 10px;
+      border-radius: 8px;
       text-decoration: none;
+      transition: 0.3s;
     }
 
     .back-btn:hover {
-      background: #0056b3;
+      background: #00b3b3;
+    }
+
+    #matchesContainer {
+      margin-top: 20px;
+    }
+
+    .match-card {
+      background: #2a2e38;
+      color: white;
+      padding: 15px;
+      margin: 10px auto;
+      border-radius: 8px;
+      width: 70%;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      text-align: left;
+    }
+
+    .match-card h3 {
+      margin-top: 0;
+      color: #00e6e6;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Browse Directory</h1>
+
+    <!-- Directory table -->
     <table>
       <thead>
         <tr>
@@ -78,6 +105,13 @@
         <!-- Users will load here -->
       </tbody>
     </table>
+
+    <!-- Find Matches -->
+    <button class="back-btn" onclick="findMatches()">Find My Matches</button>
+
+    <!-- Matches will appear here -->
+    <div id="matchesContainer"></div>
+
     <a href="get-started.html" class="back-btn">Back</a>
   </div>
 
@@ -103,6 +137,45 @@
         `;
         tableBody.appendChild(row);
       });
+    }
+
+    function findMatches() {
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+      let loggedInEmail = localStorage.getItem("loggedInEmail");
+      let matchesContainer = document.getElementById("matchesContainer");
+      matchesContainer.innerHTML = "";
+
+      if (!loggedInEmail) {
+        matchesContainer.innerHTML = "<p>Please sign in to find matches.</p>";
+        return;
+      }
+
+      let currentUser = users.find(u => u.email === loggedInEmail);
+      if (!currentUser) {
+        matchesContainer.innerHTML = "<p>User not found. Please sign in again.</p>";
+        return;
+      }
+
+      let matches = users.filter(u =>
+        u.email !== loggedInEmail &&
+        u.skillHave.toLowerCase() === currentUser.skillWant.toLowerCase() &&
+        u.skillWant.toLowerCase() === currentUser.skillHave.toLowerCase()
+      );
+
+      if (matches.length === 0) {
+        matchesContainer.innerHTML = "<p>No exact matches found right now.</p>";
+      } else {
+        matches.forEach(match => {
+          let card = document.createElement("div");
+          card.classList.add("match-card");
+          card.innerHTML = `
+            <h3>You can swap with ${match.name}!</h3>
+            <p><strong>${currentUser.name}</strong> can teach <strong>${currentUser.skillHave}</strong> and wants <strong>${currentUser.skillWant}</strong>.</p>
+            <p><strong>${match.name}</strong> can teach <strong>${match.skillHave}</strong> and wants <strong>${match.skillWant}</strong>.</p>
+          `;
+          matchesContainer.appendChild(card);
+        });
+      }
     }
 
     loadUsers();
