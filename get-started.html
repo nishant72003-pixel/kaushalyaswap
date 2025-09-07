@@ -85,42 +85,36 @@
 
   // This function is called by: <form onsubmit="return validateForm()">
   async function validateForm() {
-    const name = document.querySelector('input[name="name"]').value.trim();
-    const email = document.querySelector('input[name="email"]').value.trim();
-    const password = document.querySelector('input[name="password"]').value.trim();
-    const teach = document.querySelector('input[name="teach"]').value.trim();
-    const learn = document.querySelector('input[name="learn"]').value.trim();
+  try {
+    const name = document.querySelector('input[placeholder="Your Name"]').value;
+    const email = document.querySelector('input[placeholder="Your Email"]').value;
+    const password = document.querySelector('input[type="password"]').value;
+    const teach = document.querySelector('input[placeholder="What can you teach?"]').value;
+    const learn = document.querySelector('input[placeholder="What do you want to learn?"]').value;
 
-    // Frontend rule: password must be ONLY numbers, max 8 digits
-    if (!/^[0-9]{1,8}$/.test(password)) {
-      alert('Password must be only numbers and up to 8 digits.');
-      return false; // stop submit
-    }
+    const res = await fetch('https://kaushalyaswap.onrender.com/api/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password, teach, learn })
+    });
 
-    try {
-      const res = await fetch(`${BACKEND_URL}/api/signup`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password, teach, learn })
-      });
+    const data = await res.json();
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        alert(data.error || 'Signup failed.');
-        return false;
-      }
-
-      alert('Signup successful!');
-      // Optional: clear the form
-      const form = document.querySelector('form');
-      if (form) form.reset();
-      return false; // prevent page reload
-    } catch (err) {
-      alert('Network error. Please try again.');
+    if (!res.ok) {
+      alert(data.error || 'Signup failed.');
       return false;
     }
+
+    alert('Signup successful!');
+    const form = document.querySelector('form');
+    if (form) form.reset();
+    return false; // prevent reload
+  } catch (err) {
+    alert('Network error. Please try again.');
+    return false;
   }
+}
   </script>
 </body>
 </html>
+
