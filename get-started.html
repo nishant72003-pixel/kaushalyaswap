@@ -75,18 +75,52 @@
     <p>© <span id="year"></span> Kaushalya Swap • Learn by Sharing</p>
   </footer>
 
-  <script>
-    // Validate password (numbers only, max 8 digits)
-    function validateForm() {
-      const password = document.querySelector('input[name=\"password\"]').value;
-      if (!/^[0-9]{1,8}$/.test(password)) {
-        alert(\"Password must be only numbers and up to 8 digits.\");
+    <script>
+  // ⬇️ Replace with your Render URL (must be HTTPS)
+  const BACKEND_URL = 'https://kaushalyaswap.onrender.com';
+
+  // Keep footer year working (if your page shows it)
+  const yearEl = document.getElementById("year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  // This function is called by: <form onsubmit="return validateForm()">
+  async function validateForm() {
+    const name = document.querySelector('input[name="name"]').value.trim();
+    const email = document.querySelector('input[name="email"]').value.trim();
+    const password = document.querySelector('input[name="password"]').value.trim();
+    const teach = document.querySelector('input[name="teach"]').value.trim();
+    const learn = document.querySelector('input[name="learn"]').value.trim();
+
+    // Frontend rule: password must be ONLY numbers, max 8 digits
+    if (!/^[0-9]{1,8}$/.test(password)) {
+      alert('Password must be only numbers and up to 8 digits.');
+      return false; // stop submit
+    }
+
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/signup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password, teach, learn })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.error || 'Signup failed.');
         return false;
       }
-      return true;
+
+      alert('Signup successful!');
+      // Optional: clear the form
+      const form = document.querySelector('form');
+      if (form) form.reset();
+      return false; // prevent page reload
+    } catch (err) {
+      alert('Network error. Please try again.');
+      return false;
     }
-    // Footer year
-    document.getElementById(\"year\").textContent = new Date().getFullYear();
+  }
   </script>
 </body>
 </html>
