@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browse Users - Kaushalya Swap</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f8fb;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #0d6efd;
+      color: #fff;
+      padding: 15px;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+    }
+    main {
+      padding: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background: #f0f2f5;
+    }
+    tr:hover {
+      background: #f9fbff;
+    }
+    .no-users {
+      text-align: center;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .back-btn {
+      display: inline-block;
+      margin-bottom: 15px;
+      padding: 8px 15px;
+      background: #0d6efd;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+    .back-btn:hover {
+      background: #0b5ed7;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Kaushalya Swap - User Directory</h1>
+  </header>
+  <main>
+    <a href="get-started.html" class="back-btn">← Back</a>
+    <div id="user-list"></div>
+  </main>
+
+  <script>
+    function loadUsers() {
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+      const container = document.getElementById("user-list");
+
+      if (users.length === 0) {
+        container.innerHTML = `<div class="no-users">No users found. Be the first to sign up!</div>`;
+        return;
+      }
+
+      let table = `
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Skill (Have)</th>
+            <th>Skill (Want)</th>
+          </tr>
+      `;
+
+      users.forEach(user => {
+        table += `
+          <tr>
+            <td>${user.name}</td>
+            <td>${user.skillHave}</td>
+            <td>${user.skillWant}</td>
+          </tr>
+        `;
+      });
+
+      table += `</table>`;
+      container.innerHTML = table;
+    }
+
+    window.onload = loadUsers;
+  </script>
+</body>
+</html>
