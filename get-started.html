@@ -3,199 +3,182 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KaushalyaSwap | Get Started</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <title>Kaushalya Swap - Get Started</title>
   <style>
     body {
+      font-family: Arial, sans-serif;
+      background-color: #0d1117;
+      color: #f0f6fc;
       margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #16a085, #1abc9c);
-      color: #fff;
+      padding: 0;
     }
+
     header {
-      background: rgba(0, 0, 0, 0.7);
-      padding: 15px 30px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: sticky;
-      top: 0;
+      padding: 15px 30px;
+      background-color: #161b22;
     }
+
+    header img {
+      height: 40px;
+    }
+
     header h1 {
-      margin: 0;
-      font-size: 24px;
-      font-weight: 600;
+      font-size: 20px;
+      color: #f0f6fc;
     }
-    nav a {
+
+    header nav a {
+      color: #f0f6fc;
       margin-left: 20px;
       text-decoration: none;
-      color: #fff;
-      font-weight: 500;
-      transition: color 0.3s;
     }
-    nav a:hover {
-      color: #1abc9c;
-    }
+
     .container {
       max-width: 500px;
       margin: 60px auto;
-      background: #ffffff;
-      color: #333;
+      background-color: #161b22;
       padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0px 8px 20px rgba(0,0,0,0.2);
+      border-radius: 10px;
       text-align: center;
     }
-    h2 {
+
+    .container h2 {
       margin-bottom: 20px;
-      color: #16a085;
+      font-size: 24px;
     }
-    form input {
-      width: 100%;
+
+    input {
+      width: 90%;
       padding: 12px;
       margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-    form button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 15px;
       border: none;
       border-radius: 8px;
-      background: #16a085;
-      color: #fff;
-      font-size: 16px;
+      background-color: #0d1117;
+      color: #f0f6fc;
+    }
+
+    button {
+      background-color: #00bfa6;
+      border: none;
+      color: white;
+      padding: 12px 25px;
+      margin-top: 15px;
       cursor: pointer;
-      transition: background 0.3s;
+      border-radius: 8px;
+      font-size: 16px;
     }
-    form button:hover {
-      background: #138d75;
+
+    button:hover {
+      background-color: #009e8c;
     }
-    .note {
-      font-size: 13px;
-      margin-top: 10px;
-      color: #666;
+
+    .link {
+      margin-top: 15px;
+      display: block;
+      color: #00bfa6;
+      cursor: pointer;
     }
-    /* Popup */
-    .popup {
+
+    /* Modal Styles */
+    .modal {
       display: none;
       position: fixed;
-      top: 0; left: 0;
+      z-index: 1000;
+      left: 0; top: 0;
       width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
-      justify-content: center;
-      align-items: center;
+      background-color: rgba(0,0,0,0.7);
     }
-    .popup-content {
-      background: #fff;
-      color: #333;
-      padding: 20px 30px;
-      border-radius: 12px;
+
+    .modal-content {
+      background-color: #161b22;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 400px;
       text-align: center;
-      max-width: 300px;
     }
-    .popup-content button {
-      margin-top: 15px;
-      padding: 8px 16px;
-      background: #16a085;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
+
+    .close {
+      float: right;
+      font-size: 20px;
       cursor: pointer;
+      color: #f0f6fc;
     }
   </style>
 </head>
 <body>
-
-  <!-- Navbar -->
   <header>
-    <h1>KaushalyaSwap</h1>
+    <h1>Kaushalya Swap</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="browse.html">Browse</a>
-      <a href="get-started.html">Get Started</a>
+      <a href="about.html">About</a>
     </nav>
   </header>
 
-  <!-- Get Started Form -->
   <div class="container">
     <h2>Get Started</h2>
-    <!-- Sign Up -->
-    <form onsubmit="handleSignUp(); return false;">
-      <input type="text" id="signup-name" placeholder="Your Name" required>
-      <input type="email" id="signup-email" placeholder="Your Email" required>
-      <input type="password" id="signup-password" placeholder="Password (max 8 digits)" maxlength="8" pattern="[0-9]{1,8}" required>
-      <input type="text" id="signup-skill" placeholder="Your Skill" required>
-      <button type="submit">Sign Up</button>
-    </form>
-
-    <p class="note">Already have an account? Sign In below:</p>
-    <!-- Sign In -->
-    <form onsubmit="handleSignIn(); return false;">
-      <input type="email" id="signin-email" placeholder="Your Email" required>
-      <input type="password" id="signin-password" placeholder="Password" required>
-      <button type="submit">Sign In</button>
-    </form>
+    <button onclick="openModal('signupModal')">Sign Up</button>
+    <button onclick="openModal('signinModal')">Sign In</button>
   </div>
 
-  <!-- Popup -->
-  <div class="popup" id="popup">
-    <div class="popup-content">
-      <p id="popup-message">Message here</p>
-      <button onclick="closePopup()">OK</button>
+  <!-- Sign Up Modal -->
+  <div id="signupModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('signupModal')">&times;</span>
+      <h2>Sign Up</h2>
+      <form id="signupForm">
+        <input type="text" id="signupName" placeholder="Enter your name" required>
+        <input type="email" id="signupEmail" placeholder="Enter your email" required>
+        <input type="password" id="signupPassword" placeholder="Enter your password" required>
+        <input type="text" id="signupSkillHave" placeholder="Skills you HAVE" required>
+        <input type="text" id="signupSkillWant" placeholder="Skills you WANT" required>
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Sign In Modal -->
+  <div id="signinModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('signinModal')">&times;</span>
+      <h2>Sign In</h2>
+      <form id="signinForm">
+        <input type="email" id="signinEmail" placeholder="Enter your email" required>
+        <input type="password" id="signinPassword" placeholder="Enter your password" required>
+        <button type="submit">Sign In</button>
+      </form>
     </div>
   </div>
 
   <script>
-    function showPopup(message, redirectUrl = null) {
-      document.getElementById("popup-message").textContent = message;
-      const popup = document.getElementById("popup");
-      popup.style.display = "flex";
-
-      popup.dataset.redirect = redirectUrl;
+    // Open modal
+    function openModal(id) {
+      document.getElementById(id).style.display = "block";
     }
 
-    function closePopup() {
-      const popup = document.getElementById("popup");
-      const redirectUrl = popup.dataset.redirect;
-      popup.style.display = "none";
-
-      if (redirectUrl) {
-        window.location.href = redirectUrl;
-      }
+    // Close modal
+    function closeModal(id) {
+      document.getElementById(id).style.display = "none";
     }
 
-    function handleSignUp() {
-      const name = document.getElementById("signup-name").value;
-      const email = document.getElementById("signup-email").value;
-      const password = document.getElementById("signup-password").value;
-      const skill = document.getElementById("signup-skill").value;
+    // Sign Up
+    document.getElementById("signupForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      alert("🎉 Sign Up Successful! Welcome " + document.getElementById("signupName").value);
+      closeModal('signupModal');
+      window.location.href = "browse.html"; // redirect to browse page
+    });
 
-      // Save to localStorage
-      localStorage.setItem("name", name);
-      localStorage.setItem("email", email);
-      localStorage.setItem("password", password);
-      localStorage.setItem("skill", skill);
-
-      showPopup("🎉 Sign Up Successful!", "dashboard.html");
-    }
-
-    function handleSignIn() {
-      const email = document.getElementById("signin-email").value;
-      const password = document.getElementById("signin-password").value;
-
-      const savedEmail = localStorage.getItem("email");
-      const savedPassword = localStorage.getItem("password");
-
-      if (email === savedEmail && password === savedPassword) {
-        showPopup("✅ Sign In Successful!", "dashboard.html");
-      } else {
-        showPopup("❌ Invalid Email or Password");
-      }
-    }
+    // Sign In
+    document.getElementById("signinForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      alert("✅ Signed in successfully!");
+      closeModal('signinModal');
+      window.location.href = "browse.html"; // redirect to browse page
+    });
   </script>
-
 </body>
 </html>
