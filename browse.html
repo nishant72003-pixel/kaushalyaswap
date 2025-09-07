@@ -7,66 +7,78 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f4f8fb;
+      background-color: #0d1117;
+      color: #e6edf3;
       margin: 0;
       padding: 0;
     }
     header {
-      background: #0d6efd;
+      background: #161b22;
       color: #fff;
       padding: 15px;
       text-align: center;
     }
     h1 {
       margin: 0;
+      font-size: 28px;
     }
     main {
+      padding: 30px 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .user-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .user-card {
+      background: #161b22;
+      border-radius: 12px;
       padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: #fff;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    .user-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.5);
     }
-    th, td {
-      padding: 12px 15px;
-      border-bottom: 1px solid #ddd;
-      text-align: left;
+    .user-card h2 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      color: #58a6ff;
     }
-    th {
-      background: #f0f2f5;
+    .user-card p {
+      margin: 6px 0;
+      font-size: 14px;
+      color: #c9d1d9;
     }
-    tr:hover {
-      background: #f9fbff;
+    .back-btn {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 8px 16px;
+      background: #238636;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background 0.3s;
+    }
+    .back-btn:hover {
+      background: #2ea043;
     }
     .no-users {
       text-align: center;
       padding: 20px;
-      background: #fff;
+      background: #161b22;
       border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    .back-btn {
-      display: inline-block;
-      margin-bottom: 15px;
-      padding: 8px 15px;
-      background: #0d6efd;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 6px;
-      transition: 0.3s;
-    }
-    .back-btn:hover {
-      background: #0b5ed7;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Kaushalya Swap - User Directory</h1>
+    <h1>Browse Users - Kaushalya Swap</h1>
   </header>
   <main>
     <a href="get-started.html" class="back-btn">← Back</a>
@@ -83,27 +95,18 @@
         return;
       }
 
-      let table = `
-        <table>
-          <tr>
-            <th>Name</th>
-            <th>Skill (Have)</th>
-            <th>Skill (Want)</th>
-          </tr>
-      `;
-
+      let cards = `<div class="user-grid">`;
       users.forEach(user => {
-        table += `
-          <tr>
-            <td>${user.name}</td>
-            <td>${user.skillHave}</td>
-            <td>${user.skillWant}</td>
-          </tr>
+        cards += `
+          <div class="user-card">
+            <h2>${user.name}</h2>
+            <p><strong>Has Skill:</strong> ${user.skillHave}</p>
+            <p><strong>Wants Skill:</strong> ${user.skillWant}</p>
+          </div>
         `;
       });
-
-      table += `</table>`;
-      container.innerHTML = table;
+      cards += `</div>`;
+      container.innerHTML = cards;
     }
 
     window.onload = loadUsers;
