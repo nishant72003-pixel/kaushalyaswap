@@ -1,64 +1,60 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask import Flask, request, jsonify, render_template, redirect, url_for, session
 from pymongo import MongoClient
 from dotenv import load_dotenv
 import os
 
-# Load environment variables from .env file
+# Load environment variables
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+app.secret_key = "supersecret"  # needed for session
 
-# Connect to MongoDB
+# MongoDB connection
 MONGO_URI = os.getenv("MONGO_URI")
 client = MongoClient(MONGO_URI)
 db = client["kaushalyaswap"]
-users = db["users"]
+users_collection = db["users"]
 
-# ✅ Route: Signup
+@app.route("/")
+def home():
+    return render_template("index.html")
+
 @app.route("/signup", methods=["POST"])
 def signup():
-    data = request.json
-    name = data.get("name")
-    email = data.get("email")
-    password = data.get("password")
-    skill = data.get("skill")
+    data = request.form
+    user = {
+        "name": data["name"],
+        "email": data["email"],
+        "password": data["password"],
+        "skill": data["skill"]
+    }
 
-    if users.find_one({"email": email}):
-        return jsonify({"message": "Email already exists!"}), 400
+    # Check if user exists
+    if users_collection.find_one({"email": user["email"]}):
+        return "User already exists, please sign in!"
 
-    users.insert_one({
-        "name": name,
-        "email": email,
-        "password": password,   # ⚠️ (for now plain text, later we’ll hash)
-        "skill": skill
-    })
+    # Insert new user
+    users_collection.insert_one(user)
+    session["user"] = user
+    return redirect(url_for("dashboard"))
 
-    return jsonify({"message": "Signup successful!"}), 201
-
-# ✅ Route: Signin
 @app.route("/signin", methods=["POST"])
 def signin():
-    data = request.json
-    email = data.get("email")
-    password = data.get("password")
+    data = request.form
+    user = users_collection.find_one({"email": data["email"], "password": data["password"]})
 
-    user = users.find_one({"email": email, "password": password})
-    if not user:
-        return jsonify({"message": "Invalid email or password"}), 401
+    if user:
+        session["user"] = user
+        return redirect(url_for("dashboard"))
+    else:
+        return "Invalid email or password"
 
-    return jsonify({
-        "message": "Signin successful!",
-        "name": user["name"],
-        "skill": user["skill"]
-    }), 200
-
-
-@app.route("/", methods=["GET"])
-def home():
-    return jsonify({"message": "Backend is running!"})
-
+@app.route("/dashboard")
+def dashboard():
+    if "user" in session:
+        user = session["user"]
+        return render_template("dashboard.html", user=user)
+    return redirect(url_for("home"))
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(debug=True)
