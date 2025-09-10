@@ -63,7 +63,7 @@
         <input type="text" name="name" placeholder="Full Name" required />
         <input type="email" name="email" placeholder="Email Address" required />
         <input type="password" name="password" placeholder="Numeric Password (max 8 digits)" 
-               required pattern="[0-9]{1,8}" maxlength="8" />	
+               required pattern="[0-9]{1,8}" maxlength="8" />
         <input type="text" name="teach" placeholder="Skills you can teach" required />
         <input type="text" name="learn" placeholder="Skills you want to learn" required />
         <button type="submit">Join Now</button>
@@ -75,18 +75,52 @@
     <p>© <span id="year"></span> Kaushalya Swap • Learn by Sharing</p>
   </footer>
 
-  <script>
-    // Validate password (numbers only, max 8 digits)
-    function validateForm() {
-      const password = document.querySelector('input[name=\"password\"]').value;
-      if (!/^[0-9]{1,8}$/.test(password)) {
-        alert(\"Password must be only numbers and up to 8 digits.\");
+    <script>
+  // ✅ Your live backend URL
+  const BACKEND_URL = 'https://kaushalyaswap.onrender.com';
+
+  // Keep footer year working (if you have it)
+  const yearEl = document.getElementById("year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  // Function triggered on form submit
+  async function validateForm() {
+    const name = document.querySelector('input[name="name"]').value.trim();
+    const email = document.querySelector('input[name="email"]').value.trim();
+    const password = document.querySelector('input[name="password"]').value.trim();
+    const teach = document.querySelector('input[name="teach"]').value.trim();
+    const learn = document.querySelector('input[name="learn"]').value.trim();
+
+    // ✅ Password rule: numbers only, max 8 digits
+    if (!/^[0-9]{1,8}$/.test(password)) {
+      alert('Password must be only numbers and up to 8 digits.');
+      return false;
+    }
+
+    try {
+      const res = await fetch(`https://kaushalyaswap.onrender.com/api/signup`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, email, password, teach, learn })
+});
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.error || 'Signup failed.');
         return false;
       }
-      return true;
+
+      alert('Signup successful! ✅');
+      const form = document.querySelector('form');
+      if (form) form.reset();
+      return false; // prevent reload
+    } catch (err) {
+      console.error(err);
+      alert('Network error. Please try again.');
+      return false;
     }
-    // Footer year
-    document.getElementById(\"year\").textContent = new Date().getFullYear();
+  }
   </script>
 </body>
 </html>
