@@ -10,7 +10,7 @@
       --card: #0f1720;
       --text: #f8fafc;
       --muted: #94a3b8;
-      --accent: #14b8a6; /* turquoise */
+      --accent: #14b8a6;
       --radius: 16px;
     }
     * { box-sizing: border-box; }
@@ -23,45 +23,31 @@
         linear-gradient(180deg, #0b0e14 0%, #0b0e14 60%, #0a0d12 100%);
     }
     .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
-
-    /* Header / Nav */
     header { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(8px); background: rgba(11,14,20,.65); border-bottom: 1px solid rgba(255,255,255,.06); }
     nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
     .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .3px; }
     .brand img { width: 48px; height: 48px; border-radius: 12px; padding: 6px; background: linear-gradient(135deg, #14b8a6, #0d9488); box-shadow: 0 0 12px rgba(20, 184, 166, 0.6); }
     .brand span { font-size: 18px; }
-
     .nav-links a { color: var(--text); text-decoration: none; margin-left: 18px; font-weight: 600; opacity: .9; }
     .nav-links a:hover { opacity: 1; }
-
     .btn { display: inline-block; padding: 12px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,.12); background: #ffffff10; color: var(--text); text-decoration: none; font-weight: 700; transition: transform .15s ease, filter .15s ease; }
     .btn.primary { background: linear-gradient(180deg, var(--accent), #0ea5a5); border: none; color: #061314; }
     .btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
-
-    /* Hero */
     .hero { padding: 72px 0 48px; text-align: center; }
     .hero-logo img { width: 120px; height: 120px; border-radius: 20px; padding: 12px; background: linear-gradient(135deg, #14b8a6, #0d9488); box-shadow: 0 0 20px rgba(20, 184, 166, 0.7); margin-bottom: 20px; }
     h1 { font-size: clamp(32px, 5vw, 54px); margin: 0 0 10px; letter-spacing: .2px; }
     .lead { font-size: clamp(16px, 2.4vw, 20px); color: var(--muted); margin: 0 auto 22px; max-width: 720px; }
     .cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-
-    /* Cards grid */
     .grid { display: grid; gap: 16px; grid-template-columns: repeat(3, 1fr); margin: 40px 0; }
     .card { background: var(--card); border: 1px solid rgba(255,255,255,.06); border-radius: var(--radius); padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
     .card h3 { margin: 0 0 6px; }
     .card p { margin: 8px 0 0; color: var(--muted); }
-
     .section-title { text-align: center; margin: 40px 0 8px; }
-
-    /* Steps */
     .steps { counter-reset: step; }
     .step { display: flex; gap: 14px; align-items: flex-start; }
     .step + .step { margin-top: 12px; }
     .step::before { counter-increment: step; content: counter(step); display: grid; place-items: center; flex: 0 0 36px; height: 36px; border-radius: 10px; background: #ffffff10; border: 1px solid rgba(255,255,255,.1); font-weight: 800; }
-
     footer { padding: 28px 0; border-top: 1px solid rgba(255,255,255,.08); color: var(--muted); text-align: center; }
-
-    /* Mobile */
     .menu-toggle { display: none; }
     @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
     @media (max-width: 700px) {
@@ -71,52 +57,15 @@
       .nav-open nav { flex-wrap: wrap; }
       .nav-open .nav-links a { margin: 8px 10px 8px 0; display: inline-block; }
     }
-
-    /* 🔑 Modal Styles */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-    .modal-content {
-      background: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      width: 300px;
-      text-align: center;
-      color: #000;
-    }
-    .modal-content input {
-      width: 90%;
-      padding: 8px;
-      margin: 8px 0;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-    .modal-content button {
-      padding: 10px 14px;
-      border: none;
-      border-radius: 8px;
-      background: var(--accent);
-      color: #fff;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .modal-content a {
-      display: block;
-      margin-top: 10px;
-      color: var(--accent);
-      cursor: pointer;
-    }
+    /* Modal styles */
+    .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:9999; }
+    .modal-content { background:#fff; padding:20px; border-radius:12px; width:300px; text-align:center; color:#000; }
+    .modal-content input { width:90%; padding:8px; margin:8px 0; border-radius:6px; border:1px solid #ccc; }
+    .modal-content button { padding:10px 14px; border:none; border-radius:8px; background:var(--accent); color:#fff; font-weight:bold; cursor:pointer; }
+    .modal-content a { display:block; margin-top:10px; color:var(--accent); cursor:pointer; }
   </style>
 </head>
 <body>
-  <!-- Welcome page (index.html) -->
   <header>
     <div class="container">
       <nav>
@@ -124,17 +73,16 @@
           <img src="logo.png" alt="Kaushalya Swap logo" />
           <span>Kaushalya Swap</span>
         </div>
-        <div class="nav-links" role="navigation" aria-label="Primary">
+        <div class="nav-links">
           <a href="#how">How it works</a>
           <a href="skills.html">Browse skills</a>
           <a href="about.html">About</a>
         </div>
         <div class="nav-actions">
           <a class="btn" href="skills.html">Browse</a>
-          <!-- 🔑 Login / Signup buttons -->
           <button class="btn primary" onclick="openModal('login')">Login</button>
           <button class="btn" onclick="openModal('signup')">Signup</button>
-          <button class="menu-toggle" id="menuBtn" aria-expanded="false" aria-controls="menu">Menu ▾</button>
+          <button class="menu-toggle" id="menuBtn">Menu ▾</button>
         </div>
       </nav>
     </div>
@@ -142,9 +90,7 @@
 
   <main>
     <section class="hero container">
-      <div class="hero-logo">
-        <img src="logo.png" alt="Kaushalya Swap logo" />
-      </div>
+      <div class="hero-logo"><img src="logo.png" alt="Kaushalya Swap logo" /></div>
       <h1>Exchange skills. Learn faster.</h1>
       <p class="lead">Welcome to Kaushalya Swap — a simple place to offer what you know and learn what you don’t. Post a skill, find a partner, and swap.</p>
       <div class="cta">
@@ -152,25 +98,14 @@
         <a class="btn" href="skills.html">Browse Skills</a>
       </div>
     </section>
-
     <section class="container">
       <h2 class="section-title">Why Kaushalya Swap?</h2>
       <div class="grid">
-        <div class="card">
-          <h3>Post a Skill</h3>
-          <p>Offer tutoring, design help, coding, music, languages — anything you’re good at.</p>
-        </div>
-        <div class="card">
-          <h3>Request a Swap</h3>
-          <p>Find someone who wants to trade; agree on time and scope.</p>
-        </div>
-        <div class="card">
-          <h3>Grow Together</h3>
-          <p>Practice regularly and build your reputation over time.</p>
-        </div>
+        <div class="card"><h3>Post a Skill</h3><p>Offer tutoring, design help, coding, music, languages — anything you’re good at.</p></div>
+        <div class="card"><h3>Request a Swap</h3><p>Find someone who wants to trade; agree on time and scope.</p></div>
+        <div class="card"><h3>Grow Together</h3><p>Practice regularly and build your reputation over time.</p></div>
       </div>
     </section>
-
     <section id="how" class="container">
       <h2 class="section-title">How it works</h2>
       <div class="card">
@@ -183,13 +118,9 @@
     </section>
   </main>
 
-  <footer>
-    <div class="container">
-      <p>© <span id="year"></span> Kaushalya Swap • Made for learning</p>
-    </div>
-  </footer>
+  <footer><div class="container"><p>© <span id="year"></span> Kaushalya Swap • Made for learning</p></div></footer>
 
-  <!-- 🔑 Login Modal -->
+  <!-- Modals -->
   <div id="loginModal" class="modal">
     <div class="modal-content">
       <h3>Login</h3>
@@ -199,8 +130,6 @@
       <a onclick="closeModal('login')">Close</a>
     </div>
   </div>
-
-  <!-- 🔑 Signup Modal -->
   <div id="signupModal" class="modal">
     <div class="modal-content">
       <h3>Signup</h3>
@@ -212,7 +141,7 @@
   </div>
 
   <script>
-    // Mobile menu toggle
+    // Mobile menu
     const menuBtn = document.getElementById('menuBtn');
     if (menuBtn) {
       menuBtn.addEventListener('click', () => {
@@ -220,23 +149,16 @@
         menuBtn.setAttribute('aria-expanded', opened ? 'true' : 'false');
       });
     }
-    // Year in footer
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    // 🔑 Modal controls
-    function openModal(type) {
-      document.getElementById(type + "Modal").style.display = "flex";
-    }
-    function closeModal(type) {
-      document.getElementById(type + "Modal").style.display = "none";
-    }
+    function openModal(type){document.getElementById(type+"Modal").style.display="flex";}
+    function closeModal(type){document.getElementById(type+"Modal").style.display="none";}
   </script>
 
-  <!-- 🔥 Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js"></script>
+  <!-- Firebase Compat SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth-compat.js"></script>
   <script>
-    // ⚡ Replace with your Firebase config
+    // Replace with your Firebase config
     const firebaseConfig = {
       apiKey: "YOUR_API_KEY",
       authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
@@ -245,34 +167,26 @@
       messagingSenderId: "YOUR_SENDER_ID",
       appId: "YOUR_APP_ID"
     };
-
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    // Signup
     async function signup() {
-      const email = document.getElementById("signupEmail").value;
-      const pass = document.getElementById("signupPass").value;
-      try {
+      const email=document.getElementById("signupEmail").value;
+      const pass=document.getElementById("signupPass").value;
+      try{
         await auth.createUserWithEmailAndPassword(email, pass);
         alert("✅ Signed up successfully!");
-        window.location.href = "browse.html";
-      } catch (err) {
-        alert("❌ " + err.message);
-      }
+        window.location.href="browse.html";
+      }catch(err){alert("❌ "+err.message);}
     }
-
-    // Login
     async function login() {
-      const email = document.getElementById("loginEmail").value;
-      const pass = document.getElementById("loginPass").value;
-      try {
+      const email=document.getElementById("loginEmail").value;
+      const pass=document.getElementById("loginPass").value;
+      try{
         await auth.signInWithEmailAndPassword(email, pass);
         alert("✅ Logged in successfully!");
-        window.location.href = "browse.html";
-      } catch (err) {
-        alert("❌ " + err.message);
-      }
+        window.location.href="browse.html";
+      }catch(err){alert("❌ "+err.message);}
     }
   </script>
 </body>
