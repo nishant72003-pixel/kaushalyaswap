@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SkillSwap — Welcome</title>
+  <title>Kaushalya Swap — Welcome</title>
   <style>
     body { margin:0; font-family:sans-serif; background:#0b0e14; color:#f8fafc; }
     .btn { padding:10px 15px; border:none; border-radius:6px; cursor:pointer; }
@@ -40,24 +40,25 @@
     </div>
   </div>
 
-  <!-- Firebase SDKs (MUST load first) -->
+  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth-compat.js"></script>
 
   <script>
-    // ✅ Initialize Firebase
+    // ✅ Correct Firebase Config
     const firebaseConfig = {
       apiKey: "AIzaSyAcAQoQKNId7ByuQDkfV7gVFDo1OrJT7oE",
       authDomain: "kaushalya-7ad51.firebaseapp.com",
       projectId: "kaushalya-7ad51",
-      storageBucket: "kaushalya-7ad51.firebasestorage.app",
+      storageBucket: "kaushalya-7ad51.appspot.com", // ✅ fixed
       messagingSenderId: "593158099408",
       appId: "1:593158099408:web:6498f013ebdc03bea8a9d5",
       measurementId: "G-DJZB2VER01"
     };
 
+    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth(); // ✅ Now initialized before any function
+    const auth = firebase.auth();
 
     // --- Modal functions ---
     function openModal(type) {
@@ -73,7 +74,8 @@
       const pass = document.getElementById("signupPass").value;
       try {
         await auth.createUserWithEmailAndPassword(email, pass);
-        alert("✅ Signed up!");
+        alert("✅ Signed up successfully!");
+        window.location.href = "browse.html"; // redirect
       } catch (err) {
         alert("❌ " + err.message);
       }
@@ -84,7 +86,8 @@
       const pass = document.getElementById("loginPass").value;
       try {
         await auth.signInWithEmailAndPassword(email, pass);
-        alert("✅ Logged in!");
+        alert("✅ Logged in successfully!");
+        window.location.href = "browse.html"; // redirect
       } catch (err) {
         alert("❌ " + err.message);
       }
