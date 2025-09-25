@@ -1,108 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Browse - Kaushalya Swap</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse - Kaushalya Swap</title>
+    <style>
+        :root {
+            --bg: #0b0e14;
+            --card: #0f1720;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --accent: #14b8a6; /* turquoise */
+            --radius: 16px;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(1200px 600px at 80% -10%, rgba(20,184,166,.15), transparent),
+                linear-gradient(180deg, #0b0e14 0%, #0b0e14 60%, #0a0d12 100%);
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+        header { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(8px); background: rgba(11,14,20,.65); border-bottom: 1px solid rgba(255,255,255,.06); }
+        nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .3px; }
+        .brand img { width: 48px; height: 48px; border-radius: 12px; padding: 6px; background: linear-gradient(135deg, #14b8a6, #0d9488); box-shadow: 0 0 12px rgba(20, 184, 166, 0.6); }
+        .brand span { font-size: 18px; }
+
+        .nav-links a { color: var(--text); text-decoration: none; margin-left: 18px; font-weight: 600; opacity: .9; }
+        .nav-links a:hover { opacity: 1; }
+
+        .btn { display: inline-block; padding: 12px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,.12); background: #ffffff10; color: var(--text); text-decoration: none; font-weight: 700; transition: transform .15s ease, filter .15s ease; }
+        .btn.primary { background: linear-gradient(180deg, var(--accent), #0ea5a5); border: none; color: #061314; }
+        .btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
+
+        .hero { padding: 72px 0 48px; text-align: center; }
+        .hero-logo img { width: 120px; height: 120px; border-radius: 20px; padding: 12px; background: linear-gradient(135deg, #14b8a6, #0d9488); box-shadow: 0 0 20px rgba(20, 184, 166, 0.7); margin-bottom: 20px; }
+        h1 { font-size: clamp(32px, 5vw, 54px); margin: 0 0 10px; letter-spacing: .2px; }
+        .lead { font-size: clamp(16px, 2.4vw, 20px); color: var(--muted); margin: 0 auto 22px; max-width: 720px; }
+        .cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+        .grid { display: grid; gap: 16px; grid-template-columns: repeat(3, 1fr); margin: 40px 0; }
+        .card { background: var(--card); border: 1px solid rgba(255,255,255,.06); border-radius: var(--radius); padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+        .card h3 { margin: 0 0 6px; }
+        .card p { margin: 8px 0 0; color: var(--muted); }
+
+        .section-title { text-align: center; margin: 40px 0 8px; }
+
+        .steps { counter-reset: step; }
+        .step { display: flex; gap: 14px; align-items: flex-start; }
+        .step + .step { margin-top: 12px; }
+        .step::before { counter-increment: step; content: counter(step); display: grid; place-items: center; flex: 0 0 36px; height: 36px; border-radius: 10px; background: #ffffff10; border: 1px solid rgba(255,255,255,.1); font-weight: 800; }
+
+        footer { padding: 28px 0; border-top: 1px solid rgba(255,255,255,.08); color: var(--muted); text-align: center; }
+
+        .menu-toggle { display: none; }
+        @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+        @media (max-width: 700px) {
+            .nav-links { display: none; }
+            .menu-toggle { display: inline-flex; gap: 8px; align-items: center; background: #ffffff10; border: 1px solid rgba(255,255,255,.12); padding: 8px 12px; border-radius: 10px; color: var(--text); }
+            .nav-open .nav-links { display: flex; position: absolute; top: 64px; left: 0; right: 0; background: rgba(11,14,20,.98); padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,.06); }
+            .nav-open nav { flex-wrap: wrap; }
+            .nav-open .nav-links a { margin: 8px 10px 8px 0; display: inline-block; }
+        }
+
+        /* Added Styles for browse.html from the original style.css file */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: var(--card);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text);
+        }
+
+        .navbar .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .navbar .nav-links li a {
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .navbar .nav-links li a:hover,
+        .navbar .nav-links li a.active {
+            color: var(--accent);
+        }
+
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            color: var(--muted);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .directory {
+            padding: 2rem 0;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .directory h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--text);
+            margin-bottom: 2rem;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: var(--card);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: var(--text);
+            font-size: 1.25rem;
+            margin-top: 0;
+        }
+
+        .card p {
+            color: var(--muted);
+            margin: 0.5rem 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--muted);
+            margin-top: 2rem;
+        }
+    </style>
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="logo">Kaushalya Swap</div>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="get-started.html">Get Started</a></li>
-      <li><a href="browse.html" class="active">Browse</a></li>
-    </ul>
-  </nav>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="brand" aria-label="SkillSwap home">
+                    <span>Kaushalya Swap</span>
+                </div>
+                <div class="nav-links" role="navigation" aria-label="Primary">
+                    <a href="index.html">Home</a>
+                    <a href="get-started.html">Get Started</a>
+                    <a href="browse.html">Browse skills</a>
+                </div>
+                <div class="nav-actions">
+                    <button class="btn" onclick="openModal('login')">Login</button>
+                    <button class="btn primary" onclick="openModal('signup')">Signup</button>
+                    <button class="menu-toggle" id="menuBtn" aria-expanded="false" aria-controls="menu">Menu ▾</button>
+                </div>
+            </nav>
+        </div>
+    </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Browse Directory</h1>
-      <p>Explore users and find skill swap matches.</p>
-      <button onclick="findMatches()">Find My Matches</button>
-    </div>
-  </section>
+    <main>
+        <section class="hero container">
+            <h1>Browse Directory</h1>
+            <p class="lead">Explore users and find skill swap matches.</p>
+            <div class="cta">
+                <button class="btn primary" onclick="findMatches()">Find My Matches</button>
+            </div>
+        </section>
 
-  <!-- All Users -->
-  <section class="directory">
-    <h2>All Users</h2>
-    <div id="user-list" class="cards"></div>
-  </section>
+        <section class="container">
+            <h2 class="section-title">All Users</h2>
+            <div id="user-list" class="grid"></div>
+        </section>
 
-  <!-- My Matches -->
-  <section class="directory">
-    <h2>My Matches</h2>
-    <div id="match-list" class="cards"></div>
-  </section>
+        <section class="container">
+            <h2 class="section-title">My Matches</h2>
+            <div id="match-list" class="grid"></div>
+        </section>
+    </main>
 
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 Kaushalya Swap. All rights reserved.</p>
-  </footer>
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="year"></span> Kaushalya Swap • Made for learning</p>
+        </div>
+    </footer>
 
-  <!-- JavaScript -->
-  <script>
-    const userList = document.getElementById("user-list");
-    const matchList = document.getElementById("match-list");
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    <script>
+        // Rest of your JavaScript remains the same
+        const userList = document.getElementById("user-list");
+        const matchList = document.getElementById("match-list");
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
-    // Show all users except self
-    function displayUsers() {
-      userList.innerHTML = "";
-      if (users.length === 0) {
-        userList.innerHTML = "<p>No users found.</p>";
-        return;
-      }
-      users.forEach(user => {
-        if (!loggedInUser || user.username !== loggedInUser.username) {
-          const card = document.createElement("div");
-          card.classList.add("card");
-          card.innerHTML = `
-            <h3>${user.username}</h3>
-            <p><strong>Skill Have:</strong> ${user.skill}</p>
-            <p><strong>Skill Want:</strong> ${user.skillWant}</p>
-          `;
-          userList.appendChild(card);
+        // Show all users except self
+        function displayUsers() {
+            userList.innerHTML = "";
+            if (users.length === 0) {
+                userList.innerHTML = "<p>No users found.</p>";
+                return;
+            }
+            users.forEach(user => {
+                if (!loggedInUser || user.username !== loggedInUser.username) {
+                    const card = document.createElement("div");
+                    card.classList.add("card");
+                    card.innerHTML = `
+                        <h3>${user.username}</h3>
+                        <p><strong>Skill Have:</strong> ${user.skill}</p>
+                        <p><strong>Skill Want:</strong> ${user.skillWant}</p>
+                    `;
+                    userList.appendChild(card);
+                }
+            });
         }
-      });
-    }
 
-    // Find matches
-    function findMatches() {
-      matchList.innerHTML = "";
-      if (!loggedInUser) {
-        matchList.innerHTML = "<p>Please sign in first.</p>";
-        return;
-      }
+        // Find matches
+        function findMatches() {
+            matchList.innerHTML = "";
+            if (!loggedInUser) {
+                matchList.innerHTML = "<p>Please sign in first.</p>";
+                return;
+            }
 
-      const matches = users.filter(user =>
-        user.username !== loggedInUser.username &&
-        user.skill === loggedInUser.skillWant &&
-        user.skillWant === loggedInUser.skill
-      );
+            const matches = users.filter(user =>
+                user.username !== loggedInUser.username &&
+                user.skill === loggedInUser.skillWant &&
+                user.skillWant === loggedInUser.skill
+            );
 
-      if (matches.length === 0) {
-        matchList.innerHTML = "<p>No matches found yet.</p>";
-      } else {
-        matches.forEach(user => {
-          const card = document.createElement("div");
-          card.classList.add("card");
-          card.innerHTML = `
-            <h3>${user.username}</h3>
-            <p><strong>They Can Teach:</strong> ${user.skill}</p>
-            <p><strong>They Want:</strong> ${user.skillWant}</p>
-            <p><em>✅ This is a swap match!</em></p>
-          `;
-          matchList.appendChild(card);
-        });
-      }
-    }
+            if (matches.length === 0) {
+                matchList.innerHTML = "<p>No matches found yet.</p>";
+            } else {
+                matches.forEach(user => {
+                    const card = document.createElement("div");
+                    card.classList.add("card");
+                    card.innerHTML = `
+                        <h3>${user.username}</h3>
+                        <p><strong>They Can Teach:</strong> ${user.skill}</p>
+                        <p><strong>They Want:</strong> ${user.skillWant}</p>
+                        <p><em>✅ This is a swap match!</em></p>
+                    `;
+                    matchList.appendChild(card);
+                });
+            }
+        }
 
-    displayUsers();
-  </script>
+        displayUsers();
+
+        // Footer year
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
