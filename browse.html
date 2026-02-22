@@ -53,64 +53,38 @@
         </div>
     </footer>
 
-    <script>
-        const userList = document.getElementById("user-list");
-        const matchList = document.getElementById("match-list");
-        const users = JSON.parse(localStorage.getItem("users")) || [];
-        const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+        <script>
+    const userList = document.getElementById("user-list");
+    const matchList = document.getElementById("match-list");
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
-        function displayUsers() {
-            userList.innerHTML = "";
-            if (users.length === 0) {
-                userList.innerHTML = "<p>No users found.</p>";
-                return;
-            }
-            users.forEach(user => {
-                if (!loggedInUser || user.username !== loggedInUser.username) {
-                    const card = document.createElement("div");
-                    card.classList.add("card");
-                    card.innerHTML = `
-                        <h3>${user.username}</h3>
-                        <p><strong>Skill Have:</strong> ${user.skill}</p>
-                        <p><strong>Skill Want:</strong> ${user.skillWant}</p>
-                    `;
-                    userList.appendChild(card);
-                }
-            });
+    function displayUsers() {
+        userList.innerHTML = "";
+        if (users.length === 0) {
+            userList.innerHTML = "<p>No users found.</p>";
+            return;
         }
+        users.forEach(user => {
+            if (!loggedInUser || user.username !== loggedInUser.username) {
+                const card = document.createElement("div");
+                card.classList.add("card");
+                card.innerHTML = `
+                    <h3>${user.username}</h3>
+                    <p><strong>Skill Have:</strong> ${user.skill}</p>
+                    <p><strong>Skill Want:</strong> ${user.skillWant}</p>
+                `;
+                userList.appendChild(card);
+            }
+        });
+    }
 
-        function goToBrowse() {
+    function goToBrowse() {
         window.location.href = "skills.html";
-            if (!loggedInUser) {
-                matchList.innerHTML = "<p>Please sign in first.</p>";
-                return;
-            }
+    }
 
-            const matches = users.filter(user =>
-                user.username !== loggedInUser.username &&
-                user.skill === loggedInUser.skillWant &&
-                user.skillWant === loggedInUser.skill
-            );
-
-            if (matches.length === 0) {
-                matchList.innerHTML = "<p>No matches found yet.</p>";
-            } else {
-                matches.forEach(user => {
-                    const card = document.createElement("div");
-                    card.classList.add("card");
-                    card.innerHTML = `
-                        <h3>${user.username}</h3>
-                        <p><strong>They Can Teach:</strong> ${user.skill}</p>
-                        <p><strong>They Want:</strong> ${user.skillWant}</p>
-                        <p><em>✅ This is a swap match!</em></p>
-                    `;
-                    matchList.appendChild(card);
-                });
-            }
-        }
-
-        displayUsers();
-        document.getElementById('year').textContent = new Date().getFullYear();
-    </script>
+    displayUsers();
+    document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
