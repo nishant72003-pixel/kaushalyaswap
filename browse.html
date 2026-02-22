@@ -32,7 +32,7 @@
             <h1>Browse Directory</h1>
             <p class="lead">Explore users and find skill swap matches.</p>
             <div class="cta">
-                <button class="btn primary" onclick="findMatches()">Find My Matches</button>
+                <button class="btn primary" onclick="goToBrowse()">Find My Matches</button>
             </div>
         </section>
 
@@ -79,8 +79,8 @@
             });
         }
 
-        function findMatches() {
-            matchList.innerHTML = "";
+        function goToBrowse() {
+        window.location.href = "skills.html";
             if (!loggedInUser) {
                 matchList.innerHTML = "<p>Please sign in first.</p>";
                 return;
