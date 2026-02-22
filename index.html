@@ -113,16 +113,20 @@
     }
 
     async function signup() {
-      const email = document.getElementById("signupEmail").value;
-      const pass = document.getElementById("signupPass").value;
-      try {
-        await auth.createUserWithEmailAndPassword(email, pass);
-        alert("✅ Signed up successfully!");
-        window.location.href = "browse.html";
-      } catch (err) {
-        alert("❌ " + err.message);
-      }
-    }
+  const email = document.getElementById("signupEmail").value;
+  const pass = document.getElementById("signupPass").value;
+
+  try {
+    await auth.createUserWithEmailAndPassword(email, pass);
+
+    closeModal('signup');
+    alert("✅ Signup successful! Please login now.");
+    openModal('login');
+
+  } catch (err) {
+    alert("❌ " + err.message);
+  }
+}
 
     async function login() {
       const email = document.getElementById("loginEmail").value;
@@ -149,4 +153,5 @@
   </script>
 </body>
 </html>
+
 
